@@ -6,7 +6,6 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { TasksPage } from '../pages/tasks/tasks';
 import { UserService } from '../providers/user-service/user-service';
 
 @NgModule({
@@ -22,7 +21,6 @@ import { UserService } from '../providers/user-service/user-service';
   entryComponents: [
     MyApp,
     HomePage,
-    TasksPage,
   ],
   providers: [
     StatusBar,

@@ -9,5 +9,11 @@ import { TasksPage } from './tasks';
   imports: [
     IonicPageModule.forChild(TasksPage),
   ],
+  entryComponents: [
+    TasksPage,
+  ],
+  exports: [
+    TasksPage,
+  ],
 })
 export class TasksPageModule {}
