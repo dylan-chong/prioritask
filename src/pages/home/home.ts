@@ -5,7 +5,8 @@ import { TasksPage } from '../tasks/tasks';
 
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html'
+  templateUrl: 'home.html',
+  entryComponents: [TasksPage],
 })
 export class HomePage {
 
