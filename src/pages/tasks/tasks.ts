@@ -18,6 +18,10 @@ export class TasksPage {
     this.tasks = this.userService.tasks();
   }
 
+  public onAddClicked() {
+    this.navCtrl.push(EditTaskPage, { strategy: 'add' });
+  }
+
   public onTaskClicked(task: Task) {
     this.navCtrl.push(EditTaskPage, { strategy: 'edit', task });
   }

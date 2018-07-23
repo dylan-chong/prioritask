@@ -26,7 +26,7 @@ export class EditTaskPage {
   }
 
   public onCreateClicked() {
-    // TODO 
+    // TODO
   }
 
 }
