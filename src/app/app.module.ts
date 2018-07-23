@@ -8,12 +8,14 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { UserService } from '../providers/user-service/user-service';
 import { TasksPage } from '../pages/tasks/tasks';
+import { EditTaskPage } from '../pages/edit-task/edit-task';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     TasksPage,
+    EditTaskPage,
   ],
   imports: [
     BrowserModule,
@@ -24,6 +26,7 @@ import { TasksPage } from '../pages/tasks/tasks';
     MyApp,
     HomePage,
     TasksPage,
+    EditTaskPage,
   ],
   providers: [
     StatusBar,

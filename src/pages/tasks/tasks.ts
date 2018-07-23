@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { UserService, Task } from '../../providers/user-service/user-service';
+import { EditTaskPage } from '../edit-task/edit-task';
 
 @Component({
   selector: 'page-tasks',
@@ -14,14 +15,11 @@ export class TasksPage {
     public navCtrl: NavController,
     private userService: UserService,
   ) {
-  }
-
-  public ionViewDidLoad() {
     this.tasks = this.userService.tasks();
   }
 
   public onTaskClicked(task: Task) {
-
+    this.navCtrl.push(EditTaskPage, { strategy: 'edit', task });
   }
 
 }

@@ -1,0 +1,20 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>
+      {{ strategy === 'add' ? 'New Task' : 'Edit Task'}}
+    </ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-input placeholder="History Essay" [(ngModel)]="task.title">
+  </ion-input>
+
+  <!-- TODO only two button on add -->
+  <button ion-button full (click)="onCreateClicked()">Create</button>
+
+</ion-content>

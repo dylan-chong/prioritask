@@ -16,7 +16,6 @@ export class HomePage {
     public navCtrl: NavController,
     private userService: UserService,
   ) {
-
   }
 
   public onLoginClick() {

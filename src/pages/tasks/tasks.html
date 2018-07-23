@@ -9,6 +9,8 @@
 
 <ion-content padding>
   <ion-list>
+    <!-- TODO more details on each task item -->
+    <!-- TODO section headers for priority -->
     <button ion-item *ngFor="let task of tasks" (click)="onTaskClicked(task)">
       {{ task.title }}
     </button>
