@@ -1,16 +1,32 @@
 import { Injectable } from '@angular/core';
 
+export type User = any;
+export type Task = any;
+
 @Injectable()
 export class UserService {
 
-  private user: { username: string };
+  private user: User;
 
   constructor() {
-    console.log('Hello UserService Provider');
   }
 
   public login(username: string) {
-    this.user = { username };
+    const tasks = [
+      // TODO Remove temporary tasks
+      {
+        title: 'Go to the dentist',
+      },
+      {
+        title: 'Create mobile app',
+      },
+    ];
+
+    this.user = { username, tasks };
+  }
+
+  public tasks() {
+    return this.user.tasks;
   }
 
 }

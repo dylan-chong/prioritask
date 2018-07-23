@@ -8,8 +8,16 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-input placeholder="Username" [(ngModel)]="username"></ion-input>
+
+    <ion-input
+      placeholder="Username"
+      [(ngModel)]="username"
+      (keyup.enter)="onLoginClick()"
+      >
+    </ion-input>
+
     <button ion-button full (click)="onLoginClick()">Login</button>
     <!-- TODO Authentication -->
+
   </ion-list>
 </ion-content>

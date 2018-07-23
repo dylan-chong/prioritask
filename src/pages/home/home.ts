@@ -27,6 +27,7 @@ export class HomePage {
     }
 
     this.userService.login(username);
+    // TODO async
     this.navCtrl.push(TasksPage);
   }
 
