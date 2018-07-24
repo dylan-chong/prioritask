@@ -9,6 +9,7 @@ import { HomePage } from '../pages/home/home';
 import { UserService } from '../providers/user-service/user-service';
 import { TasksPage } from '../pages/tasks/tasks';
 import { EditTaskPage } from '../pages/edit-task/edit-task';
+import { FirebaseService } from '../providers/firebase-service/firebase-service';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { EditTaskPage } from '../pages/edit-task/edit-task';
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     UserService,
+    FirebaseService,
   ]
 })
 export class AppModule { }
