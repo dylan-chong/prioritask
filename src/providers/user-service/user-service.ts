@@ -29,7 +29,7 @@ export class UserService {
     return this.user.tasks;
   }
 
-  public newBlankTask() {
+  public newBlankTask(): Task {
     // TODO Moved to a different class
     return {
       title: '',

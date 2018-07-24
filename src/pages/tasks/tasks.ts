@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { UserService, Task } from '../../providers/user-service/user-service';
-import { EditTaskPage } from '../edit-task/edit-task';
+import { EditTaskPage, EditTaskStrategy, AddTaskStrategy } from '../edit-task/edit-task';
 
 @Component({
   selector: 'page-tasks',
@@ -19,11 +19,13 @@ export class TasksPage {
   }
 
   public onAddClicked() {
-    this.navCtrl.push(EditTaskPage, { strategy: 'add' });
+    const strategy = new AddTaskStrategy(this.userService);
+    this.navCtrl.push(EditTaskPage, { strategy });
   }
 
   public onTaskClicked(task: Task) {
-    this.navCtrl.push(EditTaskPage, { strategy: 'edit', task });
+    const strategy = new EditTaskStrategy(task);
+    this.navCtrl.push(EditTaskPage, { strategy });
   }
 
 }
