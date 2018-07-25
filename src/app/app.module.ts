@@ -5,7 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
+import { LoginPage } from '../pages/login/login';
 import { UserService } from '../providers/user-service/user-service';
 import { TasksPage } from '../pages/tasks/tasks';
 import { EditTaskPage } from '../pages/edit-task/edit-task';
@@ -14,7 +14,7 @@ import { FirebaseService } from '../providers/firebase-service/firebase-service'
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
+    LoginPage,
     TasksPage,
     EditTaskPage,
   ],
@@ -25,7 +25,7 @@ import { FirebaseService } from '../providers/firebase-service/firebase-service'
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
+    LoginPage,
     TasksPage,
     EditTaskPage,
   ],

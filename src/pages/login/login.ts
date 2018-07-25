@@ -4,11 +4,11 @@ import { UserService } from '../../providers/user-service/user-service';
 import { TasksPage } from '../tasks/tasks';
 
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html',
+  selector: 'page-login',
+  templateUrl: 'login.html',
   entryComponents: [TasksPage],
 })
-export class HomePage { // TODO Renamed to login page
+export class LoginPage { // TODO Renamed to login page
 
   public email: string;
   public password: string;
