@@ -2,12 +2,19 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class FirebaseService {
-  private firebase: any;
+  private firebasePromiseData: any;
 
   constructor() {
+    const data: any = {};
+    data.promise = new Promise((resolve, reject) => data.resolve = resolve);
+    this.firebasePromiseData = data;
   }
 
   public initialise() {
+    if (this.firebasePromiseData.hasResolved) {
+      return;
+    }
+
     const firebase = (window as any).firebase;
 
     if (!firebase) {
@@ -24,6 +31,12 @@ export class FirebaseService {
       messagingSenderId: "912663779683"
     });
 
-    this.firebase = firebase;
+    console.log(firebase)
+    this.firebasePromiseData.hasDissolved = true;
+    this.firebasePromiseData.resolve(firebase);
+  }
+
+  public firebase() {
+    return this.firebasePromiseData.promise;
   }
 }
