@@ -10,12 +10,22 @@
   <ion-list>
 
     <ion-input
-      placeholder="email"
-      [(ngModel)]="username"
+      placeholder="Email"
+      type="email"
+      [(ngModel)]="email"
+      >
+    </ion-input>
+      <!-- TODO enter key should go to next field -->
+
+    <ion-input
+      placeholder="Password"
+      type="password"
+      [(ngModel)]="password"
       (keyup.enter)="onLoginClick()"
       >
     </ion-input>
 
+      <!-- // TODO disable when no password and email entered -->
     <button ion-button full (click)="onLoginClick()">Login</button>
     <!-- TODO Authentication -->
 

@@ -10,7 +10,8 @@ import { TasksPage } from '../tasks/tasks';
 })
 export class HomePage { // TODO Renamed to login page
 
-  public username: string;
+  public email: string;
+  public password: string;
 
   constructor(
     public navCtrl: NavController,
@@ -20,15 +21,21 @@ export class HomePage { // TODO Renamed to login page
   }
 
   public onLoginClick() {
-    this.userService.login(this.username, this.password)
-      .then(() => this.navCtrl.push(TasksPage))
+    this.userService.login(this.email, this.password)
+      .then(() => {
+        this.navCtrl.push(TasksPage);
+        this.email = '';
+        this.password = '';
+      })
       .catch((e) => {
+        // TODO proper error messages customised to be more natural
         this.alertCtrl.create({
           title: 'Error signing in',
-          // TODO proper error messages customised to be more natural
           subTitle: (e || {}).message,
           buttons: ['OK'],
         }).present();
+
+        console.error('Error logging in', e);
       });
 
     // TODO loading clerk block

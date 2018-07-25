@@ -12,13 +12,13 @@ export class UserService {
   constructor(private firebaseService: FirebaseService) {
   }
 
-  public login(username: string, password: string) {
+  public login(email: string, password: string) {
     // TODO Make this return a promise and callers deal with the promise
     // TODO Call firebase
 
     return this.firebaseService.firebase().then(firebase => {
       return firebase.auth()
-        .signInWithEmailAndPassword(username, password)
+        .signInWithEmailAndPassword(email, password)
         .then((data) => this.onAuthenticate(data));
     });
   }
@@ -37,19 +37,9 @@ export class UserService {
   private onAuthenticate(data: any) {
     return this.firebaseService.firebase().then(firebase => { // TODO Replace with angular firebase
       return firebase.database()
-        .ref('users')
-        .child(data.user.uid)
+        .ref('users/' + data.user.uid)
         .once('value')
-        .then((snapshot) => {
-          debugger;
-          console.log(snapshot.val())
-          const user = snapshot.val();
-          if (!user) {
-            throw new Error('User does not exist');
-          }
-
-          this.user = user;
-        });
+        .then((snapshot) => this.user = snapshot.val() || {});
     });
   }
 
