@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, AlertController } from 'ionic-angular';
 import { UserService } from '../../providers/user-service/user-service';
 import { TasksPage } from '../tasks/tasks';
 
@@ -15,6 +15,7 @@ export class HomePage {
   constructor(
     public navCtrl: NavController,
     private userService: UserService,
+    private alertCtrl: AlertController,
   ) {
   }
 
@@ -25,9 +26,17 @@ export class HomePage {
       return;
     }
 
-    this.userService.login(username);
-    // TODO async
-    this.navCtrl.push(TasksPage);
+    this.userService.login(username)
+      .then(() => this.navCtrl.push(TasksPage))
+      .catch((e) => {
+        console.error(e);
+        this.alertCtrl.create({
+          title: 'User does not exist',
+          subTitle: 'Have you signed up yet?',
+          buttons: ['OK'],
+        }).present();
+      });
+    // TODO loading clerk block
   }
 
 }

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { FirebaseService } from '../firebase-service/firebase-service';
 
 export type User = any;
 export type Task = any;
@@ -8,21 +9,28 @@ export class UserService {
 
   private user: User;
 
-  constructor() {
+  constructor(private firebaseService: FirebaseService) {
   }
 
   public login(username: string) {
-    const tasks = [
-      // TODO Remove temporary tasks
-      {
-        title: 'Go to the dentist',
-      },
-      {
-        title: 'Create mobile app',
-      },
-    ];
+    // TODO Make this return a promise and callers deal with the promise
+    // TODO Call firebase
 
-    this.user = { username, tasks };
+    return this.firebaseService.firebase().then(firebase => {
+      return firebase.database()
+        .ref('users')
+        .child(username) // TODO escaped username
+        .once('value')
+        .then((snapshot) => {
+          console.log(snapshot.val())
+          const user = snapshot.val();
+          if (!user) {
+            throw new Error('User does not exist');
+          }
+
+          this.user = user;
+        });
+    });
   }
 
   public tasks() {
