@@ -8,7 +8,7 @@ import { TasksPage } from '../tasks/tasks';
   templateUrl: 'home.html',
   entryComponents: [TasksPage],
 })
-export class HomePage {
+export class HomePage { // TODO Renamed to login page
 
   public username: string;
 
@@ -20,22 +20,17 @@ export class HomePage {
   }
 
   public onLoginClick() {
-    const username = (this.username || '').trim();
-    if (!username) {
-      // TODO Disable a login button
-      return;
-    }
-
-    this.userService.login(username)
+    this.userService.login(this.username, this.password)
       .then(() => this.navCtrl.push(TasksPage))
       .catch((e) => {
-        console.error(e);
         this.alertCtrl.create({
-          title: 'User does not exist',
-          subTitle: 'Have you signed up yet?',
+          title: 'Error signing in',
+          // TODO proper error messages customised to be more natural
+          subTitle: (e || {}).message,
           buttons: ['OK'],
         }).present();
       });
+
     // TODO loading clerk block
   }
 
