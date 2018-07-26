@@ -2,12 +2,14 @@ import { Component } from '@angular/core';
 import { NavController, AlertController } from 'ionic-angular';
 import { UserService } from '../../providers/user-service/user-service';
 import { TasksPage } from '../tasks/tasks';
+import { SignUpPage } from '../sign-up/sign-up';
 
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
   entryComponents: [
     TasksPage,
+    SignUpPage,
   ],
 })
 export class LoginPage { // TODO Renamed to login page
