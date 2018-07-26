@@ -10,13 +10,11 @@ import { UserService } from '../providers/user-service/user-service';
 import { TasksPage } from '../pages/tasks/tasks';
 import { EditTaskPage } from '../pages/edit-task/edit-task';
 import { FirebaseService } from '../providers/firebase-service/firebase-service';
-import { SignUpPage } from '../pages/sign-up/sign-up';
 
 @NgModule({
   declarations: [
     MyApp,
     LoginPage,
-    SignUpPage,
     TasksPage,
     EditTaskPage,
   ],
@@ -28,7 +26,6 @@ import { SignUpPage } from '../pages/sign-up/sign-up';
   entryComponents: [
     MyApp,
     LoginPage,
-    SignUpPage,
     TasksPage,
     EditTaskPage,
   ],
@@ -38,6 +35,6 @@ import { SignUpPage } from '../pages/sign-up/sign-up';
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     UserService,
     FirebaseService,
-  ]
+  ],
 })
 export class AppModule { }
