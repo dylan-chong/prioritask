@@ -15,7 +15,6 @@ export class SignUpPage {
   public email: string;
   public password: string;
   public confirmationPassword: string;
-  public showPasswordConfirmationMismatch: boolean;
 
   constructor(
     public navCtrl: NavController,
@@ -28,6 +27,10 @@ export class SignUpPage {
   }
 
   public signup() {
+    if (!this.passwordsMatch()) {
+      throw new Error('Passwords do not match');
+    }
+
     const loading = this.loadingCtrl.create();
     loading.present();
 
@@ -46,14 +49,8 @@ export class SignUpPage {
       .then(() => loading.dismiss());
   }
 
-  public checkConfirmationPassword() {
-    if (!this.password || !this.confirmationPassword) {
-      this.showPasswordConfirmationMismatch = false;
-      return;
-    }
-
-    this.showPasswordConfirmationMismatch =
-      this.password !== this.confirmationPassword;
+  public passwordsMatch() {
+    return this.password === this.confirmationPassword;
   }
 
 }
