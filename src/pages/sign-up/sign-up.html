@@ -9,36 +9,41 @@
 
 <ion-content padding>
 
-  <ion-input
-    placeholder="Email"
-    type="email"
-    [(ngModel)]="email">
-  </ion-input>
-  <!-- TODO enter key should go to next field -->
+  <form (ngSubmit)="signup()">
+    <ion-input
+      placeholder="Email"
+      name="email"
+      type="email"
+      [(ngModel)]="email">
+    </ion-input>
+    <!-- TODO enter key should go to next field -->
 
-  <ion-input
-    placeholder="Password"
-    type="password"
-    [(ngModel)]="password">
-  </ion-input>
+    <ion-input
+      placeholder="Password"
+      name="password"
+      type="password"
+      [(ngModel)]="password">
+    </ion-input>
 
-  <ion-input
-    placeholder="Confirm Password"
-    type="password"
-    [(ngModel)]="confirmationPassword"
-    (keyup.enter)="signup()">
-  </ion-input>
+    <ion-input
+      placeholder="Confirm Password"
+      name="confirm_password"
+      type="password"
+      [(ngModel)]="confirmationPassword">
+    </ion-input>
 
-  <ion-label *ngIf="!passwordsMatch()" class="password-mismatch">
-    Passwords don't match
-  </ion-label>
+    <ion-label *ngIf="!passwordsMatch()" class="password-mismatch">
+      Passwords don't match
+    </ion-label>
 
-  <button
-    ion-button
-    block
-    (click)="signup()"
-    [disabled]="!canSignup()">
-    Sign Up
-  </button>
+    <button
+      ion-button
+      block
+      type="submit"
+      (click)="signup()"
+      [disabled]="!canSignup()">
+      Sign Up
+    </button>
+  </form>
 
 </ion-content>

@@ -8,28 +8,32 @@
 
 <ion-content padding>
 
-  <!-- TODO needs some extra text here -->
-  <ion-input
-    placeholder="Email"
-    type="email"
-    [(ngModel)]="email">
-  </ion-input>
-  <!-- TODO enter key should go to next field -->
+  <form (ngSubmit)="login()">
+    <!-- TODO needs some extra text here -->
+    <ion-input
+      placeholder="Email"
+      name="email"
+      type="email"
+      [(ngModel)]="email">
+    </ion-input>
+    <!-- TODO enter key should go to next field -->
 
-  <ion-input
-    placeholder="Password"
-    type="password"
-    [(ngModel)]="password"
-    (keyup.enter)="login()">
-  </ion-input>
+    <ion-input
+      placeholder="Password"
+      name="password"
+      type="password"
+      [(ngModel)]="password"
+      (keyup.enter)="login()">
+    </ion-input>
 
-  <button
-    ion-button
-    block
-    (click)="login()"
-    [disabled]="!canLogin()">
-    Log In
-  </button>
+    <button
+      ion-button
+      block
+      type="submit"
+      [disabled]="!canLogin()">
+      Log In
+    </button>
+  </form>
 
   <hr>
 
