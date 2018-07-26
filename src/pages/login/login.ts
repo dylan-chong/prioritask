@@ -25,7 +25,7 @@ export class LoginPage {
   ) {
   }
 
-  public onLoginClicked() {
+  public login() {
     const loading = this.loadingCtrl.create();
     loading.present();
 
@@ -44,7 +44,7 @@ export class LoginPage {
       .then(() => loading.dismiss());
   }
 
-  public onSignupClicked() {
+  public goToSignup() {
     this.navCtrl.push(SignUpPage, { email: this.email });
   }
 

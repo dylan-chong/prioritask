@@ -21,20 +21,20 @@
     placeholder="Password"
     type="password"
     [(ngModel)]="password"
-    (keyup.enter)="onLoginClicked()">
+    (keyup.enter)="login()">
   </ion-input>
 
   <button
     ion-button
     block
-    (click)="onLoginClicked()"
+    (click)="login()"
     [disabled]="!email || !password">
     Log In
   </button>
 
   <hr>
 
-  <button ion-button block outline (click)="onSignupClicked()">
+  <button ion-button block outline (click)="goToSignup()">
     Sign Up
   </button>
 </ion-content>

@@ -1,3 +1,6 @@
 page-sign-up {
-
+  .password-mismatch {
+    color: map-get($colors, danger);
+    // TODO NEXT set proper red colour from ionic
+  }
 }
