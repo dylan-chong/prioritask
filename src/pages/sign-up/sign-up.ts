@@ -27,8 +27,8 @@ export class SignUpPage {
   }
 
   public signup() {
-    if (!this.passwordsMatch()) {
-      throw new Error('Passwords do not match');
+    if (!this.canSignup()) {
+      return;
     }
 
     const loading = this.loadingCtrl.create();
@@ -47,6 +47,10 @@ export class SignUpPage {
         console.error('Error signing up', e);
       })
       .then(() => loading.dismiss());
+  }
+
+  public canSignup() {
+    return this.email && this.password && this.passwordsMatch();
   }
 
   public passwordsMatch() {

@@ -19,15 +19,14 @@
   <ion-input
     placeholder="Password"
     type="password"
-    [(ngModel)]="password"
-    (keyup.enter)="login()">
+    [(ngModel)]="password">
   </ion-input>
 
   <ion-input
     placeholder="Confirm Password"
     type="password"
     [(ngModel)]="confirmationPassword"
-    (keyup.enter)="login()">
+    (keyup.enter)="signup()">
   </ion-input>
 
   <ion-label *ngIf="!passwordsMatch()" class="password-mismatch">
@@ -38,7 +37,7 @@
     ion-button
     block
     (click)="signup()"
-    [disabled]="!email || !password || !passwordsMatch()">
+    [disabled]="!canSignup()">
     Sign Up
   </button>
 

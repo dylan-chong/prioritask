@@ -9,7 +9,6 @@
 <ion-content padding>
 
   <!-- TODO needs some extra text here -->
-
   <ion-input
     placeholder="Email"
     type="email"
@@ -28,7 +27,7 @@
     ion-button
     block
     (click)="login()"
-    [disabled]="!email || !password">
+    [disabled]="!canLogin()">
     Log In
   </button>
 
@@ -37,4 +36,5 @@
   <button ion-button block outline (click)="goToSignup()">
     Sign Up
   </button>
+
 </ion-content>

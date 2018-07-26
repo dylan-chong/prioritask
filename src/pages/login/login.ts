@@ -25,7 +25,15 @@ export class LoginPage {
   ) {
   }
 
+  public canLogin() {
+    return this.email && this.password;
+  }
+
   public login() {
+    if (!this.canLogin()) {
+      return;
+    }
+
     const loading = this.loadingCtrl.create();
     loading.present();
 
