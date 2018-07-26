@@ -21,13 +21,19 @@
       placeholder="Password"
       type="password"
       [(ngModel)]="password"
-      (keyup.enter)="onLoginClick()"
+      (keyup.enter)="onLoginClicked()"
       >
     </ion-input>
 
-      <!-- // TODO disable when no password and email entered -->
-    <button ion-button full (click)="onLoginClick()">Login</button>
-    <!-- TODO Authentication -->
+    <!--// TODO disable when no password and email entered -->
+    <button ion-button full (click)="onLoginClicked()">
+      Login
+    </button>
+
+    <!-- TODO make not stand out and put at the bottom of the page -->
+    <button ion-button full (click)="onSignupClicked()">
+      Sign Up
+    </button>
 
   </ion-list>
 </ion-content>

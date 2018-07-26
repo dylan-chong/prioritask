@@ -13,13 +13,26 @@ export class UserService {
   }
 
   public login(email: string, password: string) {
-    // TODO Make this return a promise and callers deal with the promise
-    // TODO Call firebase
+    if (this.user) {
+      throw new Error('Already logged in');
+    }
 
     return this.firebaseService.firebase().then(firebase => {
       return firebase.auth()
         .signInWithEmailAndPassword(email, password)
-        .then((data) => this.onAuthenticate(data));
+        .then((data) => this.loadUserData(data));
+    });
+  }
+
+  public signup(email: string, password: string) {
+    if (this.user) {
+      throw new Error('Already logged in');
+    }
+
+    return this.firebaseService.firebase().then(firebase => {
+      return firebase.auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then((data) => this.loadUserData(data));
     });
   }
 
@@ -28,14 +41,14 @@ export class UserService {
   }
 
   public newBlankTask(): Task {
-    // TODO Moved to a different class
+    // TODO Move to a different class
     return {
       title: '',
     };
   }
 
-  private onAuthenticate(data: any) {
-    return this.firebaseService.firebase().then(firebase => { // TODO Replace with angular firebase
+  private loadUserData(data: any) {
+    return this.firebaseService.firebase().then(firebase => {
       return firebase.database()
         .ref('users/' + data.user.uid)
         .once('value')
