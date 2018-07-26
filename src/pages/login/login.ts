@@ -30,13 +30,14 @@ export class LoginPage { // TODO Renamed to login page
       .then(() => {
         this.navCtrl.push(TasksPage);
         // TODO Clear email and password on authentication, not here
+        // TODO disable the back button
         this.email = '';
         this.password = '';
       })
       .catch((e) => {
         // TODO proper error messages customised to be more natural
         this.alertCtrl.create({
-          title: 'Error signing in',
+          title: 'Error logging in',
           subTitle: (e || {}).message,
           buttons: ['OK'],
         }).present();
@@ -46,23 +47,7 @@ export class LoginPage { // TODO Renamed to login page
   }
 
   public onSignupClicked() {
-    this.userService.signup(this.email, this.password)
-      .then(() => {
-        this.navCtrl.push(TasksPage);
-        // TODO Clear email and password on authentication, not here
-        this.email = '';
-        this.password = '';
-      })
-      .catch((e) => {
-        // TODO proper error messages customised to be more natural
-        this.alertCtrl.create({
-          title: 'Error signing in',
-          subTitle: (e || {}).message,
-          buttons: ['OK'],
-        }).present();
-
-        console.error('Error logging in', e);
-      });
+    this.navCtrl.push(SignUpPage);
   }
 
 }

@@ -7,34 +7,34 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-list>
 
-    <ion-input
-      placeholder="Email"
-      type="email"
-      [(ngModel)]="email"
-      >
-    </ion-input>
-      <!-- TODO enter key should go to next field -->
+  <!-- TODO needs some extra text here -->
 
-    <ion-input
-      placeholder="Password"
-      type="password"
-      [(ngModel)]="password"
-      (keyup.enter)="onLoginClicked()"
-      >
-    </ion-input>
+  <ion-input
+    placeholder="Email"
+    type="email"
+    [(ngModel)]="email">
+  </ion-input>
+  <!-- TODO enter key should go to next field -->
 
-    <!--// TODO disable when no password and email entered -->
-    <button ion-button block (click)="onLoginClicked()">
-      Login
-    </button>
+  <ion-input
+    placeholder="Password"
+    type="password"
+    [(ngModel)]="password"
+    (keyup.enter)="onLoginClicked()">
+  </ion-input>
 
-    <!-- TODO switch buttons around? -->
-    <!-- TODO put the sign up page back by reverting the commit? -->
-    <button ion-button block outline (click)="onSignupClicked()">
-      Sign Up
-    </button>
+  <button
+    ion-button
+    block
+    (click)="onLoginClicked()"
+    [disabled]="!email || !password">
+    Login
+  </button>
 
-  </ion-list>
+  <hr>
+
+  <button ion-button block outline (click)="onSignupClicked()">
+    Sign Up
+  </button>
 </ion-content>

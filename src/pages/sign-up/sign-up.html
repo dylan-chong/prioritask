@@ -9,4 +9,26 @@
 
 <ion-content padding>
 
+    <ion-input
+      placeholder="Email"
+      type="email"
+      [(ngModel)]="email">
+    </ion-input>
+      <!-- TODO enter key should go to next field -->
+
+    <ion-input
+      placeholder="Password"
+      type="password"
+      [(ngModel)]="password"
+      (keyup.enter)="onLoginClicked()">
+    </ion-input>
+
+    <button
+      ion-button
+      block
+      (click)="onSignupClicked()"
+      [disabled]="!email || !password">
+      Sign Up
+    </button>
+
 </ion-content>
