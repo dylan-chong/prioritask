@@ -38,7 +38,7 @@ export class LoginPage {
     loading.present();
 
     this.userService.login(this.email, this.password)
-      .then(() => this.navCtrl.push(TasksPage)) // TODO disable the back button
+      .then(() => this.navCtrl.setRoot(TasksPage))
       .catch((e) => {
         // TODO proper error messages customised to be more natural
         this.alertCtrl.create({
