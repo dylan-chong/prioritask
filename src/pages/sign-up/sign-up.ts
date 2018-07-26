@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController } from 'ionic-angular';
+import { NavController, AlertController, NavParams } from 'ionic-angular';
 import { UserService } from '../../providers/user-service/user-service';
 import { TasksPage } from '../tasks/tasks';
 
@@ -17,18 +17,17 @@ export class SignUpPage {
 
   constructor(
     public navCtrl: NavController,
+    public navParams: NavParams,
     private userService: UserService,
     private alertCtrl: AlertController,
   ) {
+    this.email = navParams.get('email') || '';
   }
 
   public onSignupClicked() {
     this.userService.signup(this.email, this.password)
       .then(() => {
         this.navCtrl.push(TasksPage);
-        // TODO Clear email and password on authentication, not here
-        this.email = '';
-        this.password = '';
       })
       .catch((e) => {
         // TODO proper error messages customised to be more natural

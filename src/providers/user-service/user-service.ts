@@ -20,7 +20,7 @@ export class UserService {
     return this.firebaseService.firebase().then(firebase => {
       return firebase.auth()
         .signInWithEmailAndPassword(email, password)
-        .then((data) => this.loadUserData(data));
+        .then((data) => this.loadUserData(data.user.uid));
     });
   }
 
@@ -32,7 +32,16 @@ export class UserService {
     return this.firebaseService.firebase().then(firebase => {
       return firebase.auth()
         .createUserWithEmailAndPassword(email, password)
-        .then((data) => this.loadUserData(data));
+        .then((data) => this.loadUserData(data.user.uid));
+    });
+  }
+
+  private loadUserData(uid: string) {
+    return this.firebaseService.firebase().then(firebase => {
+      return firebase.database()
+        .ref('users/' + uid)
+        .once('value')
+        .then((snapshot) => this.user = snapshot.val() || {});
     });
   }
 
@@ -45,15 +54,6 @@ export class UserService {
     return {
       title: '',
     };
-  }
-
-  private loadUserData(data: any) {
-    return this.firebaseService.firebase().then(firebase => {
-      return firebase.database()
-        .ref('users/' + data.user.uid)
-        .once('value')
-        .then((snapshot) => this.user = snapshot.val() || {});
-    });
   }
 
 }

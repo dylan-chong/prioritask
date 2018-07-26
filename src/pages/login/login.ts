@@ -12,7 +12,7 @@ import { SignUpPage } from '../sign-up/sign-up';
     SignUpPage,
   ],
 })
-export class LoginPage { // TODO Renamed to login page
+export class LoginPage {
 
   public email: string;
   public password: string;
@@ -29,10 +29,7 @@ export class LoginPage { // TODO Renamed to login page
     this.userService.login(this.email, this.password)
       .then(() => {
         this.navCtrl.push(TasksPage);
-        // TODO Clear email and password on authentication, not here
         // TODO disable the back button
-        this.email = '';
-        this.password = '';
       })
       .catch((e) => {
         // TODO proper error messages customised to be more natural
@@ -47,7 +44,7 @@ export class LoginPage { // TODO Renamed to login page
   }
 
   public onSignupClicked() {
-    this.navCtrl.push(SignUpPage);
+    this.navCtrl.push(SignUpPage, { email: this.email });
   }
 
 }
