@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController } from 'ionic-angular';
+import { NavController, AlertController, LoadingController } from 'ionic-angular';
 import { UserService } from '../../providers/user-service/user-service';
 import { TasksPage } from '../tasks/tasks';
 import { SignUpPage } from '../sign-up/sign-up';
@@ -19,18 +19,18 @@ export class LoginPage {
 
   constructor(
     public navCtrl: NavController,
+    private loadingCtrl: LoadingController,
     private userService: UserService,
     private alertCtrl: AlertController,
   ) {
   }
 
   public onLoginClicked() {
-    // TODO loading click block
+    const loading = this.loadingCtrl.create();
+    loading.present();
+
     this.userService.login(this.email, this.password)
-      .then(() => {
-        this.navCtrl.push(TasksPage);
-        // TODO disable the back button
-      })
+      .then(() => this.navCtrl.push(TasksPage)) // TODO disable the back button
       .catch((e) => {
         // TODO proper error messages customised to be more natural
         this.alertCtrl.create({
@@ -40,7 +40,8 @@ export class LoginPage {
         }).present();
 
         console.error('Error logging in', e);
-      });
+      })
+      .then(() => loading.dismiss());
   }
 
   public onSignupClicked() {
