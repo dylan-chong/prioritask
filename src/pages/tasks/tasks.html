@@ -15,11 +15,14 @@
 
 <ion-content padding>
   <ion-list>
-    <h4 *ngIf="!tasks || tasks.length === 0">
-      You have no tasks yet
-      <!-- TODO style this -->
-      <!-- TODO button to add task? -->
-    </h4>
+    <div *ngIf="!tasks || tasks.length === 0" style="text-align: center">
+      <p>
+        You have no tasks yet.
+      </p>
+      <p>
+        Go ahead and create one above!
+      </p>
+    </div>
 
     <!-- TODO more details on each task item -->
     <!-- TODO section headers for priority -->

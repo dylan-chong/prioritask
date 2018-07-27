@@ -32,9 +32,9 @@
       [(ngModel)]="confirmationPassword">
     </ion-input>
 
-    <ion-label *ngIf="!passwordsMatch()" class="password-mismatch">
+    <p ion-text *ngIf="!passwordsMatch()" color="danger">
       Passwords don't match
-    </ion-label>
+    </p>
 
     <button
       ion-button
