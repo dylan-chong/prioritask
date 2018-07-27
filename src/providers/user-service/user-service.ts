@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { FirebaseService } from '../firebase-service/firebase-service';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 export type User = any;
 export type Task = any;
@@ -9,7 +10,10 @@ export class UserService {
 
   private user: User;
 
-  constructor(private firebaseService: FirebaseService) {
+  constructor(
+    private database: AngularFireDatabase,
+    private authentication: AngularFireAuth,
+  ) {
   }
 
   public login(email: string, password: string) {
@@ -17,11 +21,9 @@ export class UserService {
       throw new Error('Already logged in');
     }
 
-    return this.firebaseService.firebase().then(firebase => {
-      return firebase.auth()
-        .signInWithEmailAndPassword(email, password)
-        .then((data) => this.loadUserData(data.user.uid));
-    });
+    return this.authentication.auth
+      .signInWithEmailAndPassword(email, password)
+      .then((data) => this.loadUserData(data.user.uid));
   }
 
   public signup(email: string, password: string) {
@@ -29,20 +31,16 @@ export class UserService {
       throw new Error('Already logged in');
     }
 
-    return this.firebaseService.firebase().then(firebase => {
-      return firebase.auth()
-        .createUserWithEmailAndPassword(email, password)
-        .then((data) => this.loadUserData(data.user.uid));
-    });
+    return this.authentication.auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((data) => this.loadUserData(data.user.uid));
   }
 
   private loadUserData(uid: string) {
-    return this.firebaseService.firebase().then(firebase => {
-      return firebase.database()
-        .ref('users/' + uid)
-        .once('value')
-        .then((snapshot) => this.user = snapshot.val() || {});
-    });
+    return this.database.database
+      .ref('users/' + uid)
+      .once('value')
+      .then((snapshot) => this.user = snapshot.val() || {});
   }
 
   public tasks() {

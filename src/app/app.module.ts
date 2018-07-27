@@ -9,8 +9,20 @@ import { LoginPage } from '../pages/login/login';
 import { UserService } from '../providers/user-service/user-service';
 import { TasksPage } from '../pages/tasks/tasks';
 import { EditTaskPage } from '../pages/edit-task/edit-task';
-import { FirebaseService } from '../providers/firebase-service/firebase-service';
 import { SignUpPage } from '../pages/sign-up/sign-up';
+
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+
+const firebaseConfig = {
+  apiKey: 'AIzaSyADjLJx9GzgiSW8Fdx7X_Pq9ohajlTVIxU',
+  authDomain: 'prioritask-b3a27.firebaseapp.com',
+  databaseURL: 'https://prioritask-b3a27.firebaseio.com',
+  projectId: 'prioritask-b3a27',
+  storageBucket: 'prioritask-b3a27.appspot.com',
+  messagingSenderId: '912663779683',
+};
 
 @NgModule({
   declarations: [
@@ -23,6 +35,9 @@ import { SignUpPage } from '../pages/sign-up/sign-up';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -37,7 +52,6 @@ import { SignUpPage } from '../pages/sign-up/sign-up';
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     UserService,
-    FirebaseService,
   ]
 })
 export class AppModule { }
