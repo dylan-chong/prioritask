@@ -12,15 +12,21 @@ export class EditTaskPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    // private userService: UserService,
+    private userService: UserService,
   ) {
     this.strategy = this.navParams.get('strategy');
   }
 
-  public onSaveClicked() {
-    // TODO
+  public save() {
+    console.log('save')
+    // TODO 
   }
 
+  public ionViewWillLeave() {
+    this.save();
+  }
+
+  // TODO ionViewCanLeave to make sure the user can't leave the page when saving invalid data
 }
 
 export class AddTaskStrategy {
