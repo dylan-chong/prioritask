@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { Observable } from 'rxjs';
 
 export type User = any;
 export type Task = any;
 
 @Injectable()
 export class UserService {
-
-  private user: User;
+  private user: Observable<User>;
 
   constructor(
     private database: AngularFireDatabase,
@@ -36,21 +36,33 @@ export class UserService {
       .then((data) => this.loadUserData(data.user.uid));
   }
 
-  private loadUserData(uid: string) {
-    return this.database.database
-      .ref('users/' + uid)
-      .once('value')
-      .then((snapshot) => this.user = snapshot.val() || {});
-  }
-
-  public tasks() {
-    return this.user.tasks;
-  }
-
   public newBlankTask(): Task {
     // TODO Move to a different class
     return {
       title: '',
+    };
+  }
+
+
+  private loadUserData(uid: string): Promise<void> {
+    const userObject = this.database.object('users/' + uid);
+    return userObject.valueChanges()
+      .first()
+      .toPromise()
+      .then((user) => {
+        if (user) {
+          return;
+        }
+        return userObject.set(this.newBlankUser());
+      })
+    .then(() => {
+      this.user = userObject.valueChanges();
+    });
+  }
+
+  private newBlankUser(): User {
+    return {
+      tasks: [],
     };
   }
 
