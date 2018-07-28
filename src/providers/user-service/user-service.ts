@@ -2,13 +2,15 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { assign } from 'lodash';
 
-export type User = any;
-export type Task = any;
+export type User = { [key: string]: any };
+export type Task = { [key: string]: any };
 
 @Injectable()
 export class UserService {
-  private user: Observable<User>;
+  private _user: Observable<User>;
 
   constructor(
     private database: AngularFireDatabase,
@@ -17,23 +19,17 @@ export class UserService {
   }
 
   public login(email: string, password: string) {
-    if (this.user) {
-      throw new Error('Already logged in');
-    }
-
+    this.requireLoggedOut();
     return this.authentication.auth
       .signInWithEmailAndPassword(email, password)
-      .then((data) => this.loadUserData(data.user.uid));
+      .then((data) => this.setupUserObservable(data.user.uid));
   }
 
   public signup(email: string, password: string) {
-    if (this.user) {
-      throw new Error('Already logged in');
-    }
-
+    this.requireLoggedOut();
     return this.authentication.auth
       .createUserWithEmailAndPassword(email, password)
-      .then((data) => this.loadUserData(data.user.uid));
+      .then((data) => this.setupUserObservable(data.user.uid));
   }
 
   public newBlankTask(): Task {
@@ -43,21 +39,22 @@ export class UserService {
     };
   }
 
+  public get user() {
+    return this._user;
+  }
 
-  private loadUserData(uid: string): Promise<void> {
-    const userObject = this.database.object('users/' + uid);
-    return userObject.valueChanges()
-      .first()
-      .toPromise()
-      .then((user) => {
-        if (user) {
-          return;
-        }
-        return userObject.set(this.newBlankUser());
-      })
-    .then(() => {
-      this.user = userObject.valueChanges();
-    });
+  private requireLoggedOut() {
+    if (this._user) {
+      throw new Error('Already logged in');
+    }
+  }
+
+  private setupUserObservable(uid: string) {
+    const userObject = this.database.object('users/' + uid).valueChanges();
+
+    this._user = userObject.pipe(map(
+      (user) => assign(this.newBlankUser(), user || {})
+    ));
   }
 
   private newBlankUser(): User {
