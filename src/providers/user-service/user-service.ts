@@ -32,11 +32,20 @@ export class UserService {
       .then((data) => this.setupUserObservable(data.user.uid));
   }
 
+  // TODO Move to a different class
   public newBlankTask(): Task {
-    // TODO Move to a different class
     return {
       title: '',
     };
+  }
+  public saveTask(task: Task) {
+    return this.authentication.user
+      .flatMap(user => {
+        return this.database
+          .list(`users/${user.uid}/tasks`)
+          .push(task);
+      })
+      .first();
   }
 
   public get user() {

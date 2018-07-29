@@ -14,7 +14,7 @@ export class TasksPage {
 
   constructor(
     public navCtrl: NavController,
-    userService: UserService,
+    private userService: UserService,
   ) {
     this.tasks = userService.user.pipe(map(
       ({ tasks }) => tasks

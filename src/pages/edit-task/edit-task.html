@@ -14,7 +14,11 @@
   <ion-input placeholder="History Essay" [(ngModel)]="strategy.task.title">
   </ion-input>
 
-  <button ion-button full (click)="save()">
+  <button
+    ion-button
+    full
+    (click)="save()"
+    [attr.disabled]="!isTaskValid() ? '' : null">
     Save
   </button>
 

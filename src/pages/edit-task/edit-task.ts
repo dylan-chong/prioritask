@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { UserService, Task } from '../../providers/user-service/user-service';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'page-edit-task',
@@ -12,21 +14,34 @@ export class EditTaskPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
+    private loadingCtrl: LoadingController,
     private userService: UserService,
+    private database: AngularFireDatabase,
   ) {
     this.strategy = this.navParams.get('strategy');
   }
 
   public save() {
-    console.log('save')
-    // TODO 
+    if (!this.isTaskValid()) {
+      return Promise.reject('Invalid task data');
+    }
+
+    const loading = this.loadingCtrl.create();
+    loading.present();
+
+    const save = this.userService.saveTask(this.strategy.task)
+      .finally(() => loading.dismiss());
+    save.subscribe(() => {});
+    return save;
   }
 
   public ionViewWillLeave() {
-    this.save();
+    return this.save();
   }
 
-  // TODO ionViewCanLeave to make sure the user can't leave the page when saving invalid data
+  public isTaskValid() {
+    return !!this.strategy.task.title;
+  }
 }
 
 export class AddTaskStrategy {
