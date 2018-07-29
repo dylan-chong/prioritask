@@ -25,10 +25,10 @@ export class EditTaskPage {
       return Observable.throw(invalidityReason);
     }
 
-    const loading = this.loadingCtrl.create();
+    const loading = this.loadingCtrl.create({ dismissOnPageChange: true });
     loading.present();
 
-    const save = this.strategy.save().finally(() => loading.dismiss());
+    const save = this.strategy.save();
     save.subscribe(() => {});
 
     return save;

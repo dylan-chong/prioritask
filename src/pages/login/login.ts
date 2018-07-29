@@ -34,7 +34,7 @@ export class LoginPage {
       return;
     }
 
-    const loading = this.loadingCtrl.create();
+    const loading = this.loadingCtrl.create({ dismissOnPageChange: true });
     loading.present();
 
     this.userService.login(this.email, this.password)
@@ -48,8 +48,7 @@ export class LoginPage {
         }).present();
 
         console.error('Error logging in', e);
-      })
-      .then(() => loading.dismiss());
+      });
   }
 
   public goToSignup() {
