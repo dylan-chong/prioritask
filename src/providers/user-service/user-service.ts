@@ -39,13 +39,12 @@ export class UserService {
     };
   }
   public saveTask(task: Task) {
-    return this.authentication.user
-      .flatMap(user => {
-        return this.database
-          .list(`users/${user.uid}/tasks`)
-          .push(task);
-      })
-      .first();
+    const uid = this.authentication.auth.currentUser.uid;
+    return Observable.fromPromise(
+      this.database
+        .list(`users/${uid}/tasks`)
+        .push(task)
+    );
   }
 
   public get user() {

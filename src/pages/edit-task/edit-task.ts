@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 import { UserService, Task } from '../../providers/user-service/user-service';
-import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -9,14 +8,13 @@ import { Observable } from 'rxjs';
   templateUrl: 'edit-task.html',
 })
 export class EditTaskPage {
-  public strategy: AddTaskStrategy | EditTaskStrategy;
+  public strategy: EditTaskPageStrategy;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
-    private userService: UserService,
   ) {
     this.strategy = this.navParams.get('strategy');
   }
@@ -30,13 +28,17 @@ export class EditTaskPage {
     const loading = this.loadingCtrl.create();
     loading.present();
 
-    const save = this.userService.saveTask(this.strategy.task)
-      .finally(() => loading.dismiss());
+    const save = this.strategy.save().finally(() => loading.dismiss());
     save.subscribe(() => {});
+
     return save;
   }
 
-  public ionViewCanLeave() {
+  public saveAndLeave() {
+    this.save().subscribe(() => this.navCtrl.pop());
+  }
+
+  public ionViewCanLeave(): Promise<any> {
     return this.save()
       .catch((e) => {
         this.showCannotLeavePageAlert(e);
@@ -67,19 +69,46 @@ export class EditTaskPage {
   }
 }
 
-export class AddTaskStrategy {
-  public task: Task;
-  public pageTitle = 'Create Task';
+abstract class EditTaskPageStrategy {
+  constructor(public pageTitle: string, public task: Task) {
+  }
 
-  constructor(userService: UserService) {
-    this.task = userService.newBlankTask();
+  public abstract save(): Observable<any>;
+}
+
+export class AddTaskStrategy extends EditTaskPageStrategy {
+  private hasSaved = false;
+  private saveInProgress?: Observable<any>;
+
+  constructor(private userService: UserService) {
+    super('Create Task', userService.newBlankTask());
+  }
+
+  public save(): Observable<any> {
+    if (this.hasSaved) {
+      return Observable.empty();
+    }
+
+    if (this.saveInProgress) {
+      return this.saveInProgress;
+    }
+
+    this.saveInProgress = this.userService.saveTask(this.task);
+    this.saveInProgress.subscribe(() => {
+      this.hasSaved = true;
+      this.saveInProgress = null;
+    });
+
+    return this.saveInProgress;
   }
 }
 
-export class EditTaskStrategy {
-  public pageTitle = 'Edit Task';
+export class EditTaskStrategy extends EditTaskPageStrategy {
+  constructor(task: Task) {
+    super('Edit Task', task);
+  }
 
-  constructor(public task: Task) {
-
+  public save(): Observable<any> {
+    throw new Error("Method not implemented.");
   }
 }
