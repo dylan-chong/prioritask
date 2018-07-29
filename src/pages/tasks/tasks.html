@@ -26,8 +26,11 @@
 
     <!-- TODO more details on each task item -->
     <!-- TODO section headers for priority -->
-    <!-- <button ion-item *ngFor="let task of tasks | async" (click)="onTaskClicked(task)"> -->
-      <!-- {{ task.title }} -->
-    <!-- </button> -->
+    <button
+      ion-item
+      *ngFor="let taskPair of tasks | async | keyValue"
+      (click)="onTaskClicked(taskPair)">
+      {{ taskPair.value.title }}
+    </button>
   </ion-list>
 </ion-content>

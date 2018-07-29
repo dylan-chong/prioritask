@@ -14,6 +14,7 @@ import { SignUpPage } from '../pages/sign-up/sign-up';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { PipesModule } from '../pipes/pipes.module';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyADjLJx9GzgiSW8Fdx7X_Pq9ohajlTVIxU',
@@ -38,6 +39,7 @@ const firebaseConfig = {
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
+    PipesModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
