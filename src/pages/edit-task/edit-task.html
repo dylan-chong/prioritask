@@ -18,7 +18,7 @@
     ion-button
     full
     (click)="save()"
-    [attr.disabled]="!isTaskValid() ? '' : null">
+    [attr.disabled]="taskInvalidityReason() ? '' : null">
     Save
   </button>
 

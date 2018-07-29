@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 import { UserService, Task } from '../../providers/user-service/user-service';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs';
@@ -15,15 +15,16 @@ export class EditTaskPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private loadingCtrl: LoadingController,
+    private alertCtrl: AlertController,
     private userService: UserService,
-    private database: AngularFireDatabase,
   ) {
     this.strategy = this.navParams.get('strategy');
   }
 
   public save() {
-    if (!this.isTaskValid()) {
-      return Promise.reject('Invalid task data');
+    const invalidityReason = this.taskInvalidityReason();
+    if (invalidityReason) {
+      return Observable.throw(invalidityReason);
     }
 
     const loading = this.loadingCtrl.create();
@@ -35,12 +36,34 @@ export class EditTaskPage {
     return save;
   }
 
-  public ionViewWillLeave() {
-    return this.save();
+  public ionViewCanLeave() {
+    return this.save()
+      .catch((e) => {
+        this.showCannotLeavePageAlert(e);
+        return Observable.throw(e);
+      })
+      .toPromise();
   }
 
-  public isTaskValid() {
-    return !!this.strategy.task.title;
+  public taskInvalidityReason() {
+    if (!this.strategy.task.title) {
+      return 'Please set a title first';
+    }
+
+    return null;
+  }
+
+  private showCannotLeavePageAlert(e: any) {
+    const invalidityReason = this.taskInvalidityReason();
+    if (e !== invalidityReason) {
+      console.error('Error leaving page', e);
+    }
+
+    this.alertCtrl.create({
+      title: 'Cannot save task',
+      subTitle: invalidityReason,
+      buttons: ['OK'],
+    }).present();
   }
 }
 
