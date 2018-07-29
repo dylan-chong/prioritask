@@ -26,8 +26,8 @@ export class TasksPage {
     this.navCtrl.push(EditTaskPage, { strategy });
   }
 
-  public onTaskClicked(task: Task) {
-    const strategy = new EditTaskStrategy(task);
+  public onTaskClicked(taskKey: string, task: Task) {
+    const strategy = new EditTaskStrategy(this.userService, taskKey, task);
     this.navCtrl.push(EditTaskPage, { strategy });
   }
 

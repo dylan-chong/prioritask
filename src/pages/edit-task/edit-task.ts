@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 import { UserService, Task } from '../../providers/user-service/user-service';
 import { Observable } from 'rxjs';
+import { cloneDeep } from 'lodash';
 
 @Component({
   selector: 'page-edit-task',
@@ -93,7 +94,7 @@ export class AddTaskStrategy extends EditTaskPageStrategy {
       return this.saveInProgress;
     }
 
-    this.saveInProgress = this.userService.saveTask(this.task);
+    this.saveInProgress = this.userService.saveNewTask(this.task);
     this.saveInProgress.subscribe(() => {
       this.hasSaved = true;
       this.saveInProgress = null;
@@ -104,11 +105,25 @@ export class AddTaskStrategy extends EditTaskPageStrategy {
 }
 
 export class EditTaskStrategy extends EditTaskPageStrategy {
-  constructor(task: Task) {
-    super('Edit Task', task);
+  private saveInProgress?: Observable<any>;
+
+  constructor(
+    private userService: UserService,
+    private taskKey: string,
+    task: Task
+  ) {
+    super('Edit Task', cloneDeep(task));
   }
 
   public save(): Observable<any> {
-    throw new Error("Method not implemented.");
+    if (this.saveInProgress) {
+      return this.saveInProgress;
+    }
+
+    this.saveInProgress = this.userService.updateTask(this.taskKey, this.task);
+    this.saveInProgress.subscribe(() => {
+      this.saveInProgress = null;
+    });
+    return this.saveInProgress;
   }
 }

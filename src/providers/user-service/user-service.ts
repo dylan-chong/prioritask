@@ -38,14 +38,23 @@ export class UserService {
       title: '',
     };
   }
-  public saveTask(task: Task) {
+  public saveNewTask(task: Task) {
     const uid = this.authentication.auth.currentUser.uid;
     return Observable.fromPromise(
       this.database
-        .list(`users/${uid}/tasks`)
-        .push(task)
+      .list(`users/${uid}/tasks`)
+      .push(task)
     );
   }
+  public updateTask(taskKey: string, task: Task) {
+    const uid = this.authentication.auth.currentUser.uid;
+    return Observable.fromPromise(
+      this.database
+      .object(`users/${uid}/tasks/${taskKey}`)
+      .set(task)
+    );
+  }
+  // TODO Move to a different class
 
   public get user() {
     return this._user;

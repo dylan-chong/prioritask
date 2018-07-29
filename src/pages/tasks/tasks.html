@@ -29,7 +29,7 @@
     <button
       ion-item
       *ngFor="let taskPair of tasks | async | keyValue"
-      (click)="onTaskClicked(taskPair)">
+      (click)="onTaskClicked(taskPair.key, taskPair.value)">
       {{ taskPair.value.title }}
     </button>
   </ion-list>
