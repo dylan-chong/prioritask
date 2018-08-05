@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Task } from '../user-service/user-service';
+import { Task, UserService } from '../user-service/user-service';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class TasksService {
@@ -11,6 +12,7 @@ export class TasksService {
   constructor(
     private database: AngularFireDatabase,
     private authentication: AngularFireAuth,
+    private userService: UserService,
   ) {
   }
 
@@ -18,6 +20,12 @@ export class TasksService {
     return {
       title: '',
     };
+  }
+
+  public get tasks() {
+    return this.userService.user.pipe(map(
+      ({ tasks }) => tasks
+    ));
   }
 
   public saveNewTask(task: Task) {

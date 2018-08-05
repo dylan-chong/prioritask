@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { UserService, Task } from '../../providers/user-service/user-service';
+import { Task } from '../../providers/user-service/user-service';
 import { EditTaskPage, EditTaskStrategy, AddTaskStrategy } from '../edit-task/edit-task';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { TasksService } from '../../providers/tasks-service/tasks-service';
 
 @Component({
@@ -15,12 +14,9 @@ export class TasksPage {
 
   constructor(
     public navCtrl: NavController,
-    private userService: UserService,
     private tasksService: TasksService,
   ) {
-    this.tasks = userService.user.pipe(map(
-      ({ tasks }) => tasks
-    ));
+    this.tasks = tasksService.tasks;
   }
 
   public onAddClicked() {
