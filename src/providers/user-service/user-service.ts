@@ -22,18 +22,22 @@ export class UserService {
     this.requireLoggedOut();
     return this.authentication.auth
       .signInWithEmailAndPassword(email, password)
-      .then((data) => this.setupUserObservable(data.user.uid));
+      .then(() => this.setupUserObservable());
   }
 
   public signup(email: string, password: string) {
     this.requireLoggedOut();
     return this.authentication.auth
       .createUserWithEmailAndPassword(email, password)
-      .then((data) => this.setupUserObservable(data.user.uid));
+      .then(() => this.setupUserObservable());
   }
 
   public get user() {
     return this._user;
+  }
+
+  public get uid() {
+    return this.authentication.auth.currentUser.uid;
   }
 
   private requireLoggedOut() {
@@ -42,8 +46,8 @@ export class UserService {
     }
   }
 
-  private setupUserObservable(uid: string) {
-    const userObject = this.database.object('users/' + uid).valueChanges();
+  private setupUserObservable() {
+    const userObject = this.database.object('users/' + this.uid).valueChanges();
 
     this._user = userObject.pipe(map(
       (user) => assign(this.newBlankUser(), user || {})

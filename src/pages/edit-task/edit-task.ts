@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
-import { UserService, Task } from '../../providers/user-service/user-service';
+import { Task } from '../../providers/user-service/user-service';
 import { Observable } from 'rxjs';
 import { cloneDeep } from 'lodash';
 import { TasksService } from '../../providers/tasks-service/tasks-service';

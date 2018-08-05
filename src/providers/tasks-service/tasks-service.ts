@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Task, UserService } from '../user-service/user-service';
 import { AngularFireDatabase } from 'angularfire2/database';
@@ -29,19 +28,17 @@ export class TasksService {
   }
 
   public saveNewTask(task: Task) {
-    const uid = this.authentication.auth.currentUser.uid;// TODO 
     return Observable.fromPromise(
       this.database
-        .list(`users/${uid}/tasks`)
+        .list(`users/${this.userService.uid}/tasks`)
         .push(task)
     );
   }
 
   public updateTask(taskKey: string, task: Task) {
-    const uid = this.authentication.auth.currentUser.uid;
     return Observable.fromPromise(
       this.database
-        .object(`users/${uid}/tasks/${taskKey}`)
+        .object(`users/${this.userService.uid}/tasks/${taskKey}`)
         .set(task)
     );
   }
