@@ -31,7 +31,7 @@ export class SignUpPage {
       return;
     }
 
-    const loading = this.loadingCtrl.create({ dismissOnPageChange: true });
+    const loading = this.loadingCtrl.create();
     loading.present();
 
     this.userService.signup(this.email, this.password)
@@ -45,7 +45,8 @@ export class SignUpPage {
         }).present();
 
         console.error('Error signing up', e);
-      });
+      })
+      .then(() => loading.dismiss());
   }
 
   public canSignup() {
