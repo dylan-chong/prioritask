@@ -3,6 +3,7 @@ import { NavController, NavParams, LoadingController, AlertController } from 'io
 import { UserService, Task } from '../../providers/user-service/user-service';
 import { Observable } from 'rxjs';
 import { cloneDeep } from 'lodash';
+import { TasksService } from '../../providers/tasks-service/tasks-service';
 
 @Component({
   selector: 'page-edit-task',
@@ -81,8 +82,8 @@ export class AddTaskStrategy extends EditTaskPageStrategy {
   private hasSaved = false;
   private saveInProgress?: Observable<any>;
 
-  constructor(private userService: UserService) {
-    super('Create Task', userService.newBlankTask());
+  constructor(private tasksService: TasksService) {
+    super('Create Task', tasksService.newBlankTask());
   }
 
   public save(): Observable<any> {
@@ -94,7 +95,7 @@ export class AddTaskStrategy extends EditTaskPageStrategy {
       return this.saveInProgress;
     }
 
-    this.saveInProgress = this.userService.saveNewTask(this.task);
+    this.saveInProgress = this.tasksService.saveNewTask(this.task);
     this.saveInProgress.subscribe(() => {
       this.hasSaved = true;
       this.saveInProgress = null;
@@ -108,7 +109,7 @@ export class EditTaskStrategy extends EditTaskPageStrategy {
   private saveInProgress?: Observable<any>;
 
   constructor(
-    private userService: UserService,
+    private tasksService: TasksService,
     private taskKey: string,
     task: Task
   ) {
@@ -120,7 +121,7 @@ export class EditTaskStrategy extends EditTaskPageStrategy {
       return this.saveInProgress;
     }
 
-    this.saveInProgress = this.userService.updateTask(this.taskKey, this.task);
+    this.saveInProgress = this.tasksService.updateTask(this.taskKey, this.task);
     this.saveInProgress.subscribe(() => {
       this.saveInProgress = null;
     });

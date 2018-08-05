@@ -4,6 +4,7 @@ import { UserService, Task } from '../../providers/user-service/user-service';
 import { EditTaskPage, EditTaskStrategy, AddTaskStrategy } from '../edit-task/edit-task';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { TasksService } from '../../providers/tasks-service/tasks-service';
 
 @Component({
   selector: 'page-tasks',
@@ -15,6 +16,7 @@ export class TasksPage {
   constructor(
     public navCtrl: NavController,
     private userService: UserService,
+    private tasksService: TasksService,
   ) {
     this.tasks = userService.user.pipe(map(
       ({ tasks }) => tasks
@@ -22,12 +24,12 @@ export class TasksPage {
   }
 
   public onAddClicked() {
-    const strategy = new AddTaskStrategy(this.userService);
+    const strategy = new AddTaskStrategy(this.tasksService);
     this.navCtrl.push(EditTaskPage, { strategy });
   }
 
   public onTaskClicked(taskKey: string, task: Task) {
-    const strategy = new EditTaskStrategy(this.userService, taskKey, task);
+    const strategy = new EditTaskStrategy(this.tasksService, taskKey, task);
     this.navCtrl.push(EditTaskPage, { strategy });
   }
 

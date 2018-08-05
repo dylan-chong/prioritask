@@ -15,6 +15,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { PipesModule } from '../pipes/pipes.module';
+import { TasksService } from '../providers/tasks-service/tasks-service';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyADjLJx9GzgiSW8Fdx7X_Pq9ohajlTVIxU',
@@ -54,6 +55,7 @@ const firebaseConfig = {
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     UserService,
+    TasksService,
   ]
 })
 export class AppModule { }

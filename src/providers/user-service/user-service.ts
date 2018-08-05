@@ -32,30 +32,6 @@ export class UserService {
       .then((data) => this.setupUserObservable(data.user.uid));
   }
 
-  // TODO Move to a different class
-  public newBlankTask(): Task {
-    return {
-      title: '',
-    };
-  }
-  public saveNewTask(task: Task) {
-    const uid = this.authentication.auth.currentUser.uid;
-    return Observable.fromPromise(
-      this.database
-      .list(`users/${uid}/tasks`)
-      .push(task)
-    );
-  }
-  public updateTask(taskKey: string, task: Task) {
-    const uid = this.authentication.auth.currentUser.uid;
-    return Observable.fromPromise(
-      this.database
-      .object(`users/${uid}/tasks/${taskKey}`)
-      .set(task)
-    );
-  }
-  // TODO Move to a different class
-
   public get user() {
     return this._user;
   }
