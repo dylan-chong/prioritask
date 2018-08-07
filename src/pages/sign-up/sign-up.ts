@@ -35,7 +35,12 @@ export class SignUpPage {
     loading.present();
 
     this.userService.signup(this.email, this.password)
-      .then(() => this.navCtrl.setRoot(TasksPage))
+      .then(() => {
+        this.navCtrl.setRoot(TasksPage, {}, {
+          animate: true,
+          direction: 'forward',
+        });
+      })
       .catch((e) => {
         // TODO proper error messages customised to be more natural
         this.alertCtrl.create({
