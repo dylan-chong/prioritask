@@ -10,16 +10,41 @@
 
 
 <ion-content padding>
+  <ion-list>
 
-  <ion-input placeholder="History Essay" [(ngModel)]="strategy.task.title">
-  </ion-input>
+    <ion-item>
+      <ion-label color="primary">Title</ion-label>
+      <ion-input placeholder="History Essay" [(ngModel)]="strategy.task.title">
+      </ion-input>
+    </ion-item>
 
-  <button
-    ion-button
-    full
-    (click)="saveAndLeave()"
-    [attr.disabled]="taskInvalidityReason() ? '' : null">
-    Save
-  </button>
+    <ion-list-header>Due</ion-list-header>
 
+    <ion-item>
+      <ion-label color="primary">Date</ion-label>
+      <ion-datetime
+        placeholder="None"
+        displayFormat="DDDD D MMM, YYYY"
+        [(ngModel)]="strategy.task.dueDate">
+      </ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label color="primary">Time</ion-label>
+      <ion-datetime
+        placeholder="None"
+        displayFormat="h:mm A"
+        [(ngModel)]="strategy.task.dueDate">
+      </ion-datetime>
+    </ion-item>
+
+    <button
+      ion-button
+      full
+      (click)="saveAndLeave()"
+      [attr.disabled]="taskInvalidityReason() ? '' : null">
+      Save
+    </button>
+
+  </ion-list>
 </ion-content>
