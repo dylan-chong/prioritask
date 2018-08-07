@@ -1,9 +1,25 @@
 <ion-header>
 
   <ion-navbar>
+    <button
+      ion-button clear small
+      *ngIf="strategy.hasCancelButton"
+      (click)="cancelAndLeave()">
+      Cancel
+    </button>
+
     <ion-title>
       {{ strategy.pageTitle }}
     </ion-title>
+
+    <ion-buttons end>
+      <button
+        ion-button clear small
+        *ngIf="strategy.hasSaveButton"
+        (click)="saveAndLeave()">
+        Add
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -37,14 +53,6 @@
         [(ngModel)]="strategy.task.dueDate">
       </ion-datetime>
     </ion-item>
-
-    <button
-      ion-button
-      full
-      (click)="saveAndLeave()"
-      [attr.disabled]="taskInvalidityReason() ? '' : null">
-      Save
-    </button>
 
   </ion-list>
 </ion-content>

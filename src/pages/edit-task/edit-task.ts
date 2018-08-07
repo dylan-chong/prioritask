@@ -27,26 +27,29 @@ export class EditTaskPage {
       return Observable.throw(invalidityReason);
     }
 
-    const loading = this.loadingCtrl.create({ dismissOnPageChange: true });
+    const loading = this.loadingCtrl.create(
+      // { dismissOnPageChange: true }
+    );
     loading.present();
 
-    const save = this.strategy.save();
-    save.subscribe(() => {});
+    return this.strategy.save().first().finally(() => {
+      loading.dismiss();
+    });
+  }
 
-    return save;
+  public cancelAndLeave() {
+    this.navCtrl.pop();
   }
 
   public saveAndLeave() {
-    this.save().subscribe(() => this.navCtrl.pop());
+    this.save().subscribe(
+      () => this.navCtrl.pop(),
+      () => this.showCannotLeavePageAlert(),
+    );
   }
 
-  public ionViewCanLeave(): Promise<any> {
-    return this.save()
-      .catch((e) => {
-        this.showCannotLeavePageAlert(e);
-        return Observable.throw(e);
-      })
-      .toPromise();
+  public ionViewCanLeave(): Promise<any> | boolean {
+    return this.strategy.canLeavePage(this);
   }
 
   public taskInvalidityReason() {
@@ -57,12 +60,8 @@ export class EditTaskPage {
     return null;
   }
 
-  private showCannotLeavePageAlert(e: any) {
+  public showCannotLeavePageAlert() {
     const invalidityReason = this.taskInvalidityReason();
-    if (e !== invalidityReason) {
-      console.error('Error leaving page', e);
-    }
-
     this.alertCtrl.create({
       title: 'Cannot save task',
       subTitle: invalidityReason,
@@ -76,14 +75,23 @@ abstract class EditTaskPageStrategy {
   }
 
   public abstract save(): Observable<any>;
+  public abstract canLeavePage(EditTaskPage: any): Promise<any> | boolean;
 }
 
 export class AddTaskStrategy extends EditTaskPageStrategy {
+  public readonly hasCancelButton = true;
+  public readonly hasSaveButton = true;
+
   private hasSaved = false;
   private saveInProgress?: Observable<any>;
 
   constructor(private tasksService: TasksService) {
     super('Create Task', tasksService.newBlankTask());
+  }
+
+  public canLeavePage(editTaskPage: EditTaskPage): Promise<any> | boolean {
+    // TODO show confirmation when the android back button is pressed and task is invalid
+    return true;
   }
 
   public save(): Observable<any> {
@@ -114,6 +122,12 @@ export class EditTaskStrategy extends EditTaskPageStrategy {
     task: Task
   ) {
     super('Edit Task', cloneDeep(task));
+  }
+
+  public canLeavePage(editTaskPage: EditTaskPage): Promise<any> | boolean {
+    const save = editTaskPage.save();
+    save.subscribe(() => {});
+    return save.toPromise();
   }
 
   public save(): Observable<any> {

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ModalController } from 'ionic-angular';
 import { Task } from '../../providers/user-service/user-service';
 import { EditTaskPage, EditTaskStrategy, AddTaskStrategy } from '../edit-task/edit-task';
 import { Observable } from 'rxjs';
@@ -14,6 +14,7 @@ export class TasksPage {
 
   constructor(
     public navCtrl: NavController,
+    private modalController: ModalController,
     private tasksService: TasksService,
   ) {
     this.tasks = tasksService.tasks;
@@ -21,7 +22,8 @@ export class TasksPage {
 
   public onAddClicked() {
     const strategy = new AddTaskStrategy(this.tasksService);
-    this.navCtrl.push(EditTaskPage, { strategy });
+    const modal = this.modalController.create(EditTaskPage, { strategy });
+    modal.present();
   }
 
   public onTaskClicked(taskKey: string, task: Task) {
