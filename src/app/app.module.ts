@@ -16,7 +16,9 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { PipesModule } from '../pipes/pipes.module';
 import { TasksService } from '../providers/tasks-service/tasks-service';
+import { WelcomePage } from '../pages/welcome/welcome';
 
+// TODO move
 const firebaseConfig = {
   apiKey: 'AIzaSyADjLJx9GzgiSW8Fdx7X_Pq9ohajlTVIxU',
   authDomain: 'prioritask-b3a27.firebaseapp.com',
@@ -33,6 +35,7 @@ const firebaseConfig = {
     SignUpPage,
     TasksPage,
     EditTaskPage,
+    WelcomePage,
   ],
   imports: [
     BrowserModule,
@@ -49,6 +52,7 @@ const firebaseConfig = {
     SignUpPage,
     TasksPage,
     EditTaskPage,
+    WelcomePage,
   ],
   providers: [
     StatusBar,

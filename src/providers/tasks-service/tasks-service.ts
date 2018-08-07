@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Task, UserService } from '../user-service/user-service';
 import { AngularFireDatabase } from 'angularfire2/database';
-import { AngularFireAuth } from 'angularfire2/auth';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -10,7 +9,6 @@ export class TasksService {
 
   constructor(
     private database: AngularFireDatabase,
-    private authentication: AngularFireAuth,
     private userService: UserService,
   ) {
   }
