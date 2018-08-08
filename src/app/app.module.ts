@@ -17,16 +17,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { PipesModule } from '../pipes/pipes.module';
 import { TasksService } from '../providers/tasks-service/tasks-service';
 import { WelcomePage } from '../pages/welcome/welcome';
-
-// TODO NEXT move
-const firebaseConfig = {
-  apiKey: 'AIzaSyADjLJx9GzgiSW8Fdx7X_Pq9ohajlTVIxU',
-  authDomain: 'prioritask-b3a27.firebaseapp.com',
-  databaseURL: 'https://prioritask-b3a27.firebaseio.com',
-  projectId: 'prioritask-b3a27',
-  storageBucket: 'prioritask-b3a27.appspot.com',
-  messagingSenderId: '912663779683',
-};
+import { firebaseConfig } from '../config';
 
 @NgModule({
   declarations: [
