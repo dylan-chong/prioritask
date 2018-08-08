@@ -10,7 +10,7 @@ import { TasksService } from '../../providers/tasks-service/tasks-service';
   templateUrl: 'edit-task.html',
 })
 export class EditTaskPage {
-  public strategy: EditTaskPageStrategy;
+  public strategy: PageStrategy;
 
   constructor(
     public navCtrl: NavController,
@@ -27,14 +27,10 @@ export class EditTaskPage {
       return Observable.throw(invalidityReason);
     }
 
-    const loading = this.loadingCtrl.create(
-      // { dismissOnPageChange: true }
-    );
+    const loading = this.loadingCtrl.create();
     loading.present();
 
-    return this.strategy.save().first().finally(() => {
-      loading.dismiss();
-    });
+    return this.strategy.save().finally(() => loading.dismiss());
   }
 
   public cancelAndLeave() {
@@ -70,7 +66,7 @@ export class EditTaskPage {
   }
 }
 
-abstract class EditTaskPageStrategy {
+abstract class PageStrategy {
   constructor(public pageTitle: string, public task: Task) {
   }
 
@@ -78,7 +74,7 @@ abstract class EditTaskPageStrategy {
   public abstract canLeavePage(EditTaskPage: any): Promise<any> | boolean;
 }
 
-export class AddTaskStrategy extends EditTaskPageStrategy {
+export class AddTaskStrategy extends PageStrategy {
   public readonly hasCancelButton = true;
   public readonly hasSaveButton = true;
 
@@ -113,7 +109,7 @@ export class AddTaskStrategy extends EditTaskPageStrategy {
   }
 }
 
-export class EditTaskStrategy extends EditTaskPageStrategy {
+export class EditTaskStrategy extends PageStrategy {
   private saveInProgress?: Observable<any>;
 
   constructor(
@@ -125,9 +121,12 @@ export class EditTaskStrategy extends EditTaskPageStrategy {
   }
 
   public canLeavePage(editTaskPage: EditTaskPage): Promise<any> | boolean {
-    const save = editTaskPage.save();
-    save.subscribe(() => {});
-    return save.toPromise();
+    return new Promise((resolve, reject) => {
+      editTaskPage.save().subscribe(resolve, () => {
+        editTaskPage.showCannotLeavePageAlert();
+        reject();
+      });
+    });
   }
 
   public save(): Observable<any> {
