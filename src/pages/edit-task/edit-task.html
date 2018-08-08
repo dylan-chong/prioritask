@@ -1,12 +1,14 @@
 <ion-header>
 
   <ion-navbar>
-    <button
-      ion-button clear small
-      *ngIf="strategy.hasCancelButton"
-      (click)="cancelAndLeave()">
-      Cancel
-    </button>
+    <ion-buttons>
+      <button
+        ion-button clear small
+        *ngIf="strategy.hasCancelButton"
+        (click)="cancelAndLeave()">
+        Cancel
+      </button>
+    </ion-buttons>
 
     <ion-title>
       {{ strategy.pageTitle }}
@@ -31,6 +33,8 @@
     <ion-item>
       <ion-label color="primary">Title</ion-label>
       <ion-input placeholder="History Essay" [(ngModel)]="strategy.task.title">
+        <!-- TODO SOMETIME trim string -->
+        <!-- TODO SOMETIME multiline for long strings -->
       </ion-input>
     </ion-item>
 
