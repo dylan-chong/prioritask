@@ -30,6 +30,7 @@
     <!-- TODO section headers for priority -->
     <button
       ion-item
+      detail-push
       *ngFor="let taskPair of tasks | async | keyValue"
       (click)="onTaskClicked(taskPair.key, taskPair.value)">
       {{ taskPair.value.title }}
