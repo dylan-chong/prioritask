@@ -86,7 +86,7 @@ export class AddTaskStrategy extends PageStrategy {
   }
 
   public canLeavePage(editTaskPage: EditTaskPage): Promise<any> | boolean {
-    // TODO show confirmation when the android back button is pressed and task is invalid
+    // TODO SOMETIME show confirmation when the android back button is pressed and task is invalid
     return true;
   }
 

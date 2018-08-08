@@ -45,7 +45,7 @@ export class LoginPage {
         });
       })
       .catch((e) => {
-        // TODO proper error messages customised to be more natural
+        // TODO SOMETIME proper error messages customised to be more natural
         this.alertCtrl.create({
           title: 'Error logging in',
           subTitle: (e || {}).message,

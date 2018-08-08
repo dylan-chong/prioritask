@@ -18,7 +18,7 @@ import { PipesModule } from '../pipes/pipes.module';
 import { TasksService } from '../providers/tasks-service/tasks-service';
 import { WelcomePage } from '../pages/welcome/welcome';
 
-// TODO move
+// TODO NEXT move
 const firebaseConfig = {
   apiKey: 'AIzaSyADjLJx9GzgiSW8Fdx7X_Pq9ohajlTVIxU',
   authDomain: 'prioritask-b3a27.firebaseapp.com',
