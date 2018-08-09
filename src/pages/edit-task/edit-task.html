@@ -28,8 +28,8 @@
 
 
 <ion-content padding>
-  <ion-list>
 
+  <ion-list>
     <ion-item>
       <ion-label color="primary">Title</ion-label>
       <ion-input placeholder="History Essay" [(ngModel)]="strategy.task.title">
@@ -37,7 +37,9 @@
         <!-- TODO SOMETIME multiline for long strings -->
       </ion-input>
     </ion-item>
+  </ion-list>
 
+  <ion-list>
     <ion-list-header>Due</ion-list-header>
 
     <ion-item>
@@ -58,7 +60,9 @@
         [(ngModel)]="strategy.task.dueDate">
       </ion-datetime>
     </ion-item>
+  </ion-list>
 
+  <ion-list>
     <ion-list-header>Notes</ion-list-header>
 
     <ion-item>
@@ -68,6 +72,6 @@
         style="height: 100px;">
       </ion-textarea>
     </ion-item>
-
   </ion-list>
+
 </ion-content>
