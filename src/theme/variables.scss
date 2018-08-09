@@ -72,6 +72,8 @@ $colors: (
 
 @import "ionic.theme.default";
 
+$text-input-highlight-color-valid: map-get($colors, primary);
+
 
 // Ionicons
 // --------------------------------------------------
