@@ -8,6 +8,8 @@ import { assign } from 'lodash';
 export type User = { [key: string]: any };
 export type Task = { [key: string]: any };
 
+// TODO find a way of remembering the authentication across at restarts
+
 @Injectable()
 export class UserService {
   private _user: Observable<User>;

@@ -59,5 +59,15 @@
       </ion-datetime>
     </ion-item>
 
+    <ion-list-header>Notes</ion-list-header>
+
+    <ion-item>
+      <ion-textarea
+        placeholder="Notes"
+        [(ngModel)]="strategy.task.notes"
+        style="height: 100px;">
+      </ion-textarea>
+    </ion-item>
+
   </ion-list>
 </ion-content>
