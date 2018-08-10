@@ -14,19 +14,21 @@
 
 
 <ion-content padding>
-  <ion-list>
-    <div *ngIf="(tasks | async)?.length === 0" style="text-align: center">
-      <p>
-        You have no tasks yet.
-      </p>
-      <p>
-        Go ahead and create one above!
-      </p>
-    </div>
 
-    <!-- TODO MAYBE? more details on each task item -->
+  <div *ngIf="(tasks | async)?.length === 0" style="text-align: center">
+    <p>
+      You have no tasks yet.
+    </p>
+    <p>
+      Go ahead and create one above!
+    </p>
+  </div>
 
-    <ion-item *ngFor="let taskPair of tasks | async | keyValue">
+  <ion-list *ngFor="let group of tasks | async | keyValue | groupTasks">
+    <ion-list-header>{{ group.title }}</ion-list-header>
+
+    <ion-item *ngFor="let taskPair of group.tasks">
+
       <ion-checkbox
         [(ngModel)]="taskPair.value.completed"
         (ionChange)="changeTaskCompletion(taskPair.key, taskPair.value.completed)"
@@ -37,6 +39,8 @@
         (click)="onTaskClicked(taskPair.key, taskPair.value)">
         {{ taskPair.value.title }}
       </ion-label>
+
     </ion-item>
   </ion-list>
+
 </ion-content>
