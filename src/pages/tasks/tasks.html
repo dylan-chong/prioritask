@@ -32,7 +32,9 @@
         (ionChange)="changeTaskCompletion(taskPair.key, taskPair.value.completed)"
         class="no-cover-item">
       </ion-checkbox>
-      <ion-label (click)="onTaskClicked(taskPair.key, taskPair.value)">
+      <ion-label
+        [ngClass]="{ 'completed-task': taskPair.value.completed }"
+        (click)="onTaskClicked(taskPair.key, taskPair.value)">
         {{ taskPair.value.title }}
       </ion-label>
     </ion-item>
