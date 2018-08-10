@@ -25,13 +25,16 @@
     </div>
 
     <!-- TODO MAYBE? more details on each task item -->
-    <!-- TODO section headers for priority -->
-    <button
-      ion-item
-      detail-push
-      *ngFor="let taskPair of tasks | async | keyValue"
-      (click)="onTaskClicked(taskPair.key, taskPair.value)">
-      {{ taskPair.value.title }}
-    </button>
+
+    <ion-item *ngFor="let taskPair of tasks | async | keyValue">
+      <ion-checkbox
+        [(ngModel)]="taskPair.value.completed"
+        (ionChange)="changeTaskCompletion(taskPair.key, taskPair.value.completed)"
+        class="no-cover-item">
+      </ion-checkbox>
+      <ion-label (click)="onTaskClicked(taskPair.key, taskPair.value)">
+        {{ taskPair.value.title }}
+      </ion-label>
+    </ion-item>
   </ion-list>
 </ion-content>

@@ -23,6 +23,7 @@ export class TasksService {
     return {
       title: '',
       notes: '',
+      completed: false,
       dueDate,
     };
   }
@@ -41,11 +42,11 @@ export class TasksService {
     );
   }
 
-  public updateTask(taskKey: string, task: Task) {
+  public updateTask(taskKey: string, task: Partial<Task>) {
     return Observable.fromPromise(
       this.database
         .object(`users/${this.userService.uid}/tasks/${taskKey}`)
-        .set(task)
+        .update(task)
     );
   }
 

@@ -31,4 +31,8 @@ export class TasksPage {
     this.navCtrl.push(EditTaskPage, { strategy });
   }
 
+  public changeTaskCompletion(taskKey: string, isCompleted: boolean) {
+    this.tasksService.updateTask(taskKey, { completed: isCompleted });
+  }
+
 }
