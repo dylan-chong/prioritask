@@ -43,6 +43,16 @@ export class UserService {
       .then(() => this.setupUserObservable());
   }
 
+  public logOut() {
+    if (!this.user) {
+      return Promise.resolve();
+    }
+
+    return this.authentication.auth.signOut().then(() => {
+      this._user = null;
+    });
+  }
+
   public get user() {
     return this._user;
   }

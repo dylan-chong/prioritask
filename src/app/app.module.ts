@@ -18,6 +18,7 @@ import { PipesModule } from '../pipes/pipes.module';
 import { TasksService } from '../providers/tasks-service/tasks-service';
 import { WelcomePage } from '../pages/welcome/welcome';
 import { firebaseConfig } from '../config';
+import { SettingsPage } from '../pages/settings/settings';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { firebaseConfig } from '../config';
     TasksPage,
     EditTaskPage,
     WelcomePage,
+    SettingsPage,
   ],
   imports: [
     BrowserModule,
@@ -44,6 +46,7 @@ import { firebaseConfig } from '../config';
     TasksPage,
     EditTaskPage,
     WelcomePage,
+    SettingsPage,
   ],
   providers: [
     StatusBar,
