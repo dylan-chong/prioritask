@@ -54,7 +54,7 @@ export class EditTaskPage {
       title: 'Are you sure you want to delete this task?',
       subTitle: `It will be gone for ever.`,
       buttons: [
-        { text: 'Delete the task', role: 'destructive', handler: performDelete },
+        { text: 'Delete the task', handler: performDelete },
         { text: 'Cancel', role: 'cancel' },
       ]
     });

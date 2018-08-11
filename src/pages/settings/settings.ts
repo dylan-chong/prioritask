@@ -21,7 +21,7 @@ export class SettingsPage {
       title: 'Are you sure you want to logout?',
       subTitle: 'We\'ll keep your data safe for your return.',
       buttons: [
-        { text: 'Log Out', role: 'destructive', handler: () => this.doLogOut() },
+        { text: 'Log Out', handler: () => this.doLogOut() },
         { text: 'Cancel', role: 'cancel' },
       ]
     });
