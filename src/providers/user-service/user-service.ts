@@ -8,8 +8,6 @@ import { assign } from 'lodash';
 export type User = { [key: string]: any };
 export type Task = { [key: string]: any };
 
-// TODO find a way of remembering the authentication across at restarts
-
 @Injectable()
 export class UserService {
   private _user: Observable<User>;
@@ -18,6 +16,17 @@ export class UserService {
     private database: AngularFireDatabase,
     private authentication: AngularFireAuth,
   ) {
+  }
+
+  public tryAutoLogin(): Observable<boolean> {
+    return this.authentication.user.first().map((authenticationUser) => {
+      if (!authenticationUser) {
+        return false;
+      }
+
+      this.setupUserObservable();
+      return true;
+    });
   }
 
   public login(email: string, password: string) {
