@@ -3,7 +3,7 @@ import { Task, UserService } from '../user-service/user-service';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import * as moment from 'moment';
+import * as moment from "moment";
 
 @Injectable()
 export class TasksService {
@@ -42,6 +42,14 @@ export class TasksService {
       this.database
         .object(`users/${this.userService.uid}/tasks/${taskKey}`)
         .update(task)
+    );
+  }
+
+  public deleteTask(taskKey: string) {
+    return Observable.fromPromise(
+      this.database
+        .object(`users/${this.userService.uid}/tasks/${taskKey}`)
+        .remove()
     );
   }
 }

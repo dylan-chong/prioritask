@@ -45,6 +45,22 @@ export class EditTaskPage {
     );
   }
 
+  public deleteAndLeave() {
+    const performDelete = () => {
+      this.strategy.deleteTask().subscribe(() => this.navCtrl.pop());
+    };
+
+    const alert = this.alertCtrl.create({
+      title: 'Are you sure you want to delete this task?',
+      subTitle: `It will be gone for ever.`,
+      buttons: [
+        { text: 'Delete the task', role: 'destructive', handler: performDelete },
+        { text: 'Cancel', role: 'cancel' },
+      ]
+    });
+    alert.present();
+  }
+
   public ionViewCanLeave(): Promise<any> | boolean {
     return this.strategy.canLeavePage(this);
   }
@@ -82,6 +98,7 @@ abstract class PageStrategy {
   }
 
   public abstract save(): Observable<any>;
+  public abstract deleteTask(): Observable<any>;
   public abstract canLeavePage(EditTaskPage: any): Promise<any> | boolean;
 }
 
@@ -118,10 +135,17 @@ export class AddTaskStrategy extends PageStrategy {
 
     return this.saveInProgress;
   }
+
+  public deleteTask(): Observable<any> {
+    throw new Error('Unsupported operation');
+  }
 }
 
 export class EditTaskStrategy extends PageStrategy {
+  public readonly hasDeleteButton = true;
+
   private saveInProgress?: Observable<any>;
+  private hasDeleted = false;
 
   constructor(
     private tasksService: TasksService,
@@ -132,6 +156,10 @@ export class EditTaskStrategy extends PageStrategy {
   }
 
   public canLeavePage(editTaskPage: EditTaskPage): Promise<any> | boolean {
+    if (this.hasDeleted) {
+      return true;
+    }
+
     return new Promise((resolve, reject) => {
       editTaskPage.save().subscribe(resolve, () => {
         editTaskPage.showCannotLeavePageAlert();
@@ -150,5 +178,11 @@ export class EditTaskStrategy extends PageStrategy {
       this.saveInProgress = null;
     });
     return this.saveInProgress;
+  }
+
+  public deleteTask(): Observable<any> {
+    return this.tasksService.deleteTask(this.taskKey).map(() => {
+      this.hasDeleted = true;
+    })
   }
 }

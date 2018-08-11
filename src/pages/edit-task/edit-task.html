@@ -74,4 +74,13 @@
     </ion-item>
   </ion-list>
 
+  <button
+    ion-button
+    block
+    color="danger"
+    *ngIf="strategy.hasDeleteButton"
+    (click)="deleteAndLeave()">
+    Delete Task
+  </button>
+
 </ion-content>
