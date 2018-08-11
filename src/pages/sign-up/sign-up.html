@@ -32,7 +32,7 @@
       [(ngModel)]="confirmationPassword">
     </ion-input>
 
-    <p ion-text *ngIf="!passwordsMatch()" color="danger">
+    <p ion-text [style.opacity]="(!password || passwordsMatch()) ? 0 : 1" color="danger">
       Passwords don't match
     </p>
 

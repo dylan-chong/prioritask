@@ -56,6 +56,7 @@ export class TasksPage {
   }
 
   private goToFilters() {
+    // TODO AFTER filters page
     // this.navCtrl.push(FiltersPage);
   }
 

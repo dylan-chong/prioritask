@@ -29,7 +29,6 @@ export class SettingsPage {
   }
 
   private doLogOut() {
-    // TODO are you sure you want to logout
     this.userService.logOut().then(() => {
       this.navController.setRoot(LoginPage, {}, {
         animate: true,
