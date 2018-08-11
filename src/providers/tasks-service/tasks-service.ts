@@ -3,6 +3,7 @@ import { Task, UserService } from '../user-service/user-service';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import * as moment from 'moment';
 
 @Injectable()
 export class TasksService {
@@ -14,17 +15,11 @@ export class TasksService {
   }
 
   public newBlankTask(): Task {
-    // Hack around ionic date time component ignoring time zone of ISO8601 format string
-    // https://stackoverflow.com/a/47569053/1726450
-    const dueDate = (new Date(Date.now() - new Date().getTimezoneOffset() * 60000))
-      .toISOString()
-      .slice(0, -1);
-
     return {
       title: '',
       notes: '',
       completed: false,
-      dueDate,
+      dueDate: moment().toISOString(),
     };
   }
 
@@ -49,5 +44,7 @@ export class TasksService {
         .update(task)
     );
   }
-
 }
+
+export const isOverdue = (task: Task) =>
+  moment().isSameOrAfter(task.dueDate);

@@ -1,6 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Task } from '../../providers/user-service/user-service';
 import * as moment from 'moment';
+import { isOverdue } from '../../providers/tasks-service/tasks-service';
 
 interface TaskPair {
   key: string;
@@ -29,13 +30,6 @@ export class GroupTasksPipe implements PipeTransform {
   }
 
 }
-
-// TODO move all of these functions into better places, considering layers
-
-const isOverdue = (task: Task) => {
-  const due = new Date(task.dueDate);
-  return due.getTime() > Date.now();
-};
 
 const groupers: ((tasks: TaskPair[]) => TaskGroup)[] = [
   (taskPairs) => ({

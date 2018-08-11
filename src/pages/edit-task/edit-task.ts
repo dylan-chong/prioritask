@@ -4,6 +4,7 @@ import { Task } from '../../providers/user-service/user-service';
 import { Observable } from 'rxjs';
 import { cloneDeep } from 'lodash';
 import { TasksService } from '../../providers/tasks-service/tasks-service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'page-edit-task',
@@ -63,6 +64,16 @@ export class EditTaskPage {
       subTitle: invalidityReason,
       buttons: ['OK'],
     }).present();
+  }
+
+  // Hack around ionic date time component ignoring time zone of ISO8601 format string
+  public get localDueDate() {
+    return moment(this.strategy.task.dueDate).format();
+  }
+
+  // See the documentation for the getter
+  public set localDueDate(newDate: string) {
+    this.strategy.task.dueDate = moment(newDate).toISOString();
   }
 }
 
