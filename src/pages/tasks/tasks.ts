@@ -3,7 +3,7 @@ import { NavController, ModalController } from 'ionic-angular';
 import { Task } from '../../providers/user-service/user-service';
 import { EditTaskPage, EditTaskStrategy, AddTaskStrategy } from '../edit-task/edit-task';
 import { Observable } from 'rxjs';
-import { TasksService } from '../../providers/tasks-service/tasks-service';
+import { TasksService, isOverdue } from '../../providers/tasks-service/tasks-service';
 
 @Component({
   selector: 'page-tasks',
@@ -11,6 +11,7 @@ import { TasksService } from '../../providers/tasks-service/tasks-service';
 })
 export class TasksPage {
   public tasks: Observable<Task[]>;
+  public isOverdue = isOverdue;
 
   constructor(
     public navCtrl: NavController,

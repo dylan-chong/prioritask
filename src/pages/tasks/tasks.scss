@@ -8,4 +8,8 @@ page-tasks {
   .completed-task {
     color: gray;
   }
+
+  .overdue-task {
+    color: map-get($colors, danger);
+  }
 }

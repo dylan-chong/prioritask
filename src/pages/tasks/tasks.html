@@ -35,7 +35,10 @@
         class="no-cover-item">
       </ion-checkbox>
       <ion-label
-        [ngClass]="{ 'completed-task': taskPair.value.completed }"
+        [ngClass]="{
+          'completed-task': taskPair.value.completed,
+          'overdue-task': isOverdue(taskPair.value) && !taskPair.value.completed
+        }"
         (click)="onTaskClicked(taskPair.key, taskPair.value)">
         {{ taskPair.value.title }}
       </ion-label>

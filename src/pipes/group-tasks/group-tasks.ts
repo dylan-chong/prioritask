@@ -33,7 +33,7 @@ export class GroupTasksPipe implements PipeTransform {
 
 const groupers: ((tasks: TaskPair[]) => TaskGroup)[] = [
   (taskPairs) => ({
-    title: 'Overdue',
+    title: 'Due',
     tasks: taskPairs.filter(({ value: task }) => 
       isOverdue(task)
     ),
