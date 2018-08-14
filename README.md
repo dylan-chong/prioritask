@@ -1,7 +1,10 @@
 # Installation
 
-Run: `yarn install`
+Run: 
 
-# Running
+    bash
+    yarn install
 
-`ionic serve`
+    # Make sure we are using the same of ionic, by using the local version
+    export PATH=./node_modules/.bin/:$PATH
+    ionic serve
