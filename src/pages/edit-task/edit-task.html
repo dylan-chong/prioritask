@@ -44,12 +44,9 @@
 
     <ion-item>
       <ion-label color="primary">Date</ion-label>
-      <ion-datetime
-        placeholder="None"
-        max="2300"
-        displayFormat="DDDD D MMM, YYYY"
-        [(ngModel)]="localDueDate">
-      </ion-datetime>
+      <div item-content (click)="selectDate()">
+        {{ dateIgnoringTime() }}
+      </div>
     </ion-item>
 
     <ion-item>

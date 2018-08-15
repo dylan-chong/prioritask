@@ -3,14 +3,12 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
-
 import { MyApp } from './app.component';
 import { LoginPage } from '../pages/login/login';
 import { UserService } from '../providers/user-service/user-service';
 import { TasksPage } from '../pages/tasks/tasks';
 import { EditTaskPage } from '../pages/edit-task/edit-task';
 import { SignUpPage } from '../pages/sign-up/sign-up';
-
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -21,6 +19,7 @@ import { firebaseConfig } from '../config';
 import { SettingsPage } from '../pages/settings/settings';
 import { FiltersPage } from '../pages/filters/filters';
 import { SettingsService } from '../providers/settings-service/settings-service';
+import { CalendarModule } from "ion2-calendar";
 
 @NgModule({
   declarations: [
@@ -39,6 +38,7 @@ import { SettingsService } from '../providers/settings-service/settings-service'
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
+    CalendarModule,
     PipesModule,
   ],
   bootstrap: [IonicApp],

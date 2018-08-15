@@ -3,7 +3,7 @@ import { Task, UserService } from '../user-service/user-service';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { map as lodashMap, assign } from 'lodash';
+import { assign, mapValues } from 'lodash';
 import * as moment from "moment";
 
 @Injectable()
@@ -27,7 +27,7 @@ export class TasksService {
 
   public get tasks() {
     return this.userService.user.pipe(map(
-      ({ tasks }) => lodashMap(
+      ({ tasks }) => mapValues(
         tasks, 
         (task) => assign(this.newBlankTask(), task)
       )

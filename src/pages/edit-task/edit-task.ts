@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, AlertController, ModalController } from 'ionic-angular';
 import { Task } from '../../providers/user-service/user-service';
 import { Observable } from 'rxjs';
 import { cloneDeep } from 'lodash';
 import { TasksService } from '../../providers/tasks-service/tasks-service';
 import * as moment from 'moment';
+import { CalendarModalOptions, CalendarModal, CalendarResult } from 'ion2-calendar';
 
 @Component({
   selector: 'page-edit-task',
@@ -18,6 +19,7 @@ export class EditTaskPage {
     public navParams: NavParams,
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
+    private modalController: ModalController,
   ) {
     this.strategy = this.navParams.get('strategy');
   }
@@ -80,6 +82,35 @@ export class EditTaskPage {
       subTitle: invalidityReason,
       buttons: ['OK'],
     }).present();
+  }
+
+  public selectDate() {
+    const options: CalendarModalOptions = {
+      title: 'Select Due Date',
+      defaultDate: moment(this.strategy.task.dueDate).toDate(),
+    };
+    const myCalendar = this.modalController.create(CalendarModal, { options });
+
+    myCalendar.present();
+
+    myCalendar.onDidDismiss((date: CalendarResult, type: string) => {
+      if (type === 'cancel') {
+        return;
+      }
+
+      const oldDueDate = moment(this.strategy.task.dueDate);
+      const newDueDate = moment(date.dateObj).set({
+        hour: oldDueDate.get('hour'),
+        minute: oldDueDate.get('minute'), 
+        second: oldDueDate.get('second')
+      });
+
+      this.strategy.task.dueDate = newDueDate.toISOString();
+    })
+  }
+
+  public dateIgnoringTime() {
+    return moment(this.strategy.task.dueDate).format('dddd, MMMM Do YYYY');
   }
 
   // Hack around ionic date time component ignoring time zone of ISO8601 format string
