@@ -20,5 +20,15 @@
       </ion-toggle>
     </ion-item>
 
+    <ion-item>
+      <ion-label>Show incomplete tasks</ion-label>
+      <ion-toggle 
+        [(ngModel)]="filters.showIncompleteTasks"
+        (ionChange)="saveFilterChange({
+          showIncompleteTasks: filters.showIncompleteTasks 
+        })">
+      </ion-toggle>
+    </ion-item>
+
   </ion-list>
 </ion-content>

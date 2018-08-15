@@ -34,11 +34,17 @@ export class SettingsService {
 }
 
 export const convertFilterSettings = (filterSettings: any) => {
-  const filters = [];
+  const filters: Function[] = [];
 
   if (!filterSettings.showCompletedTasks) {
     filters.push(taskPairs => {
       return taskPairs.filter(({ value: task }) => !task.completed)
+    });
+  }
+
+  if (!filterSettings.showIncompleteTasks) {
+    filters.push(taskPairs => {
+      return taskPairs.filter(({ value: task }) => task.completed)
     });
   }
 

@@ -60,6 +60,7 @@ export class UserService {
       settings: {
         filters: {
           showCompletedTasks: false,
+          showIncompleteTasks: true,
         },
       },
     };

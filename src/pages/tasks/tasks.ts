@@ -2,20 +2,23 @@ import { Component } from '@angular/core';
 import { NavController, ModalController, ActionSheetController } from 'ionic-angular';
 import { Task } from '../../providers/user-service/user-service';
 import { EditTaskPage, EditTaskStrategy, AddTaskStrategy } from '../edit-task/edit-task';
-import { Observable } from 'rxjs';
 import { TasksService, isOverdue } from '../../providers/tasks-service/tasks-service';
 import { SettingsPage } from '../settings/settings';
 import { FiltersPage } from '../filters/filters';
 import { SettingsService, convertFilterSettings } from '../../providers/settings-service/settings-service';
+import { KeyValuePipe } from '../../pipes/key-value/key-value';
+import { TaskGroup, GroupTasksPipe, TaskPair } from '../../pipes/group-tasks/group-tasks';
+import { map, startWith } from 'rxjs/operators';
+import { combineLatest } from 'rxjs/observable/combineLatest';
 
 @Component({
   selector: 'page-tasks',
   templateUrl: 'tasks.html',
 })
 export class TasksPage {
-  public tasks: Observable<Task[]>;
+  public taskGroups: TaskGroup[] = [];
+  public unfilteredTaskPairs: TaskPair[] = [];
   public isOverdue = isOverdue;
-  public filters: any[];
 
   constructor(
     public navCtrl: NavController,
@@ -24,11 +27,7 @@ export class TasksPage {
     private tasksService: TasksService,
     private settingsService: SettingsService,
   ) {
-    this.tasks = tasksService.tasks;
-
-    settingsService.settings.subscribe(({ filters }) => {
-      this.filters = convertFilterSettings(filters);
-    });
+    this.initialiseTaskList();
   }
 
   public addTask() {
@@ -67,4 +66,25 @@ export class TasksPage {
     this.navCtrl.push(FiltersPage);
   }
 
+  private initialiseTaskList() {
+    const taskPairsObservable = this.tasksService.tasks.pipe(
+      map(tasksObject => {
+        this.unfilteredTaskPairs = new KeyValuePipe().transform(tasksObject);
+        return this.unfilteredTaskPairs;
+      }),
+      startWith([]),
+    );
+
+    const filtersObservable = this.settingsService.settings.pipe(
+      map(({ filters }) => {
+        return convertFilterSettings(filters);
+      }),
+      startWith([]),
+    );
+
+    combineLatest(taskPairsObservable, filtersObservable)
+      .subscribe(([taskPairs, filters]) => {
+        this.taskGroups = new GroupTasksPipe().transform(taskPairs, filters);
+      });
+  }
 }

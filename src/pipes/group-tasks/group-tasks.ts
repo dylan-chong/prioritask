@@ -3,12 +3,12 @@ import { Task } from '../../providers/user-service/user-service';
 import * as moment from 'moment';
 import { isOverdue } from '../../providers/tasks-service/tasks-service';
 
-interface TaskPair {
+export interface TaskPair {
   key: string;
   value: Task;
 }
 
-interface TaskGroup {
+export interface TaskGroup {
   title: string;
   tasks: TaskPair[];
 }

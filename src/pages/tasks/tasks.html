@@ -21,7 +21,7 @@
 
 <ion-content padding>
 
-  <div *ngIf="(tasks | async)?.length === 0" style="text-align: center">
+  <div *ngIf="unfilteredTaskPairs.length === 0" style="text-align: center">
     <p>
       You have no tasks yet.
     </p>
@@ -30,7 +30,15 @@
     </p>
   </div>
 
-  <ion-list *ngFor="let group of tasks | async | keyValue | groupTasks:filters">
+  <div 
+    *ngIf="unfilteredTaskPairs.length > 0 && taskGroups.length === 0" 
+    style="text-align: center">
+    <p>
+      You have no tasks matching your filters.
+    </p>
+  </div>
+
+  <ion-list *ngFor="let group of taskGroups">
     <ion-list-header>{{ group.title }}</ion-list-header>
 
     <ion-item *ngFor="let taskPair of group.tasks">
