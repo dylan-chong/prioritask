@@ -5,9 +5,9 @@ import { EditTaskPage, EditTaskStrategy, AddTaskStrategy } from '../edit-task/ed
 import { TasksService, isOverdue } from '../../providers/tasks-service/tasks-service';
 import { SettingsPage } from '../settings/settings';
 import { FiltersPage } from '../filters/filters';
-import { SettingsService, convertFilterSettings } from '../../providers/settings-service/settings-service';
+import { SettingsService, convertFilterSettings, TaskGroup, TaskPair } from '../../providers/settings-service/settings-service';
 import { KeyValuePipe } from '../../pipes/key-value/key-value';
-import { TaskGroup, GroupTasksPipe, TaskPair } from '../../pipes/group-tasks/group-tasks';
+import { GroupTasksPipe, } from '../../pipes/group-tasks/group-tasks';
 import { map, startWith } from 'rxjs/operators';
 import { combineLatest } from 'rxjs/observable/combineLatest';
 

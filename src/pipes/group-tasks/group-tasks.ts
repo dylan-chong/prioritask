@@ -1,17 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Task } from '../../providers/user-service/user-service';
 import * as moment from 'moment';
 import { isOverdue } from '../../providers/tasks-service/tasks-service';
-
-export interface TaskPair {
-  key: string;
-  value: Task;
-}
-
-export interface TaskGroup {
-  title: string;
-  tasks: TaskPair[];
-}
+import { TaskPair, TaskGroup } from '../../providers/settings-service/settings-service';
 
 @Pipe({
   name: 'groupTasks',

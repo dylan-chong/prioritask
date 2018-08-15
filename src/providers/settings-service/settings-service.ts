@@ -1,8 +1,20 @@
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { UserService } from '../user-service/user-service';
+import { UserService, Task } from '../user-service/user-service';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs';
+import { sortBy } from 'lodash';
+import * as moment from "moment";
+
+export interface TaskPair {
+  key: string;
+  value: Task;
+}
+
+export interface TaskGroup {
+  title: string;
+  tasks: TaskPair[];
+}
 
 @Injectable()
 export class SettingsService {
@@ -34,7 +46,11 @@ export class SettingsService {
 }
 
 export const convertFilterSettings = (filterSettings: any) => {
-  const filters: Function[] = [];
+  const filters: ((pairs: TaskPair[]) => TaskPair[])[] = [];
+
+  filters.push(taskPairs => {
+    return sortBy(taskPairs, (pair) => -moment(pair.value.dueDate).unix());
+  });
 
   if (!filterSettings.showCompletedTasks) {
     filters.push(taskPairs => {
