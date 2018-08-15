@@ -18,7 +18,7 @@ export class UserService {
 
   public tryAutoLogin(): Observable<boolean> {
     return this.authentication.user.first().map((authenticationUser) => {
-      return !authenticationUser;
+      return !!authenticationUser;
     });
   }
 
