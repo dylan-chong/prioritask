@@ -10,8 +10,6 @@ export type Task = { [key: string]: any };
 
 @Injectable()
 export class UserService {
-  private _user: Observable<User>;
-
   constructor(
     private database: AngularFireDatabase,
     private authentication: AngularFireAuth,
@@ -37,9 +35,7 @@ export class UserService {
       return Promise.resolve();
     }
 
-    return this.authentication.auth.signOut().then(() => {
-      this._user = null;
-    });
+    return this.authentication.auth.signOut();
   }
 
   public get user() {
@@ -56,12 +52,6 @@ export class UserService {
 
   public get uid() {
     return this.authentication.auth.currentUser.uid;
-  }
-
-  private requireLoggedOut() {
-    if (this._user) {
-      throw new Error('Already logged in');
-    }
   }
 
   private newBlankUser(): User {
