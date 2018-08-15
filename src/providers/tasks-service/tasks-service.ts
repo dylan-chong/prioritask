@@ -32,7 +32,7 @@ export class TasksService {
   public saveNewTask(task: Task) {
     return Observable.fromPromise(
       this.database
-        .list(`users/${this.userService.uid}/tasks`)
+        .list(this.databasePath)
         .push(task)
     );
   }
@@ -40,7 +40,7 @@ export class TasksService {
   public updateTask(taskKey: string, task: Partial<Task>) {
     return Observable.fromPromise(
       this.database
-        .object(`users/${this.userService.uid}/tasks/${taskKey}`)
+        .object(`${this.databasePath}/${taskKey}`)
         .update(task)
     );
   }
@@ -48,9 +48,13 @@ export class TasksService {
   public deleteTask(taskKey: string) {
     return Observable.fromPromise(
       this.database
-        .object(`users/${this.userService.uid}/tasks/${taskKey}`)
+        .object(`${this.databasePath}/${taskKey}`)
         .remove()
     );
+  }
+
+  private get databasePath() {
+    return this.userService.databasePath + '/tasks';
   }
 }
 

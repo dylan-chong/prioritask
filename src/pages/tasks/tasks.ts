@@ -5,6 +5,7 @@ import { EditTaskPage, EditTaskStrategy, AddTaskStrategy } from '../edit-task/ed
 import { Observable } from 'rxjs';
 import { TasksService, isOverdue } from '../../providers/tasks-service/tasks-service';
 import { SettingsPage } from '../settings/settings';
+import { FiltersPage } from '../filters/filters';
 
 @Component({
   selector: 'page-tasks',
@@ -42,8 +43,8 @@ export class TasksPage {
     const actionSheet = this.actionSheetController.create({
       title: 'Options',
       buttons: [
-        { text: 'Settings', handler: () => this.goToSettings() },
         { text: 'Filters', handler: () => this.goToFilters() },
+        { text: 'Settings', handler: () => this.goToSettings() },
         { text: 'Cancel', role: 'cancel' },
       ]
     });
@@ -56,8 +57,7 @@ export class TasksPage {
   }
 
   private goToFilters() {
-    // TODO AFTER filters page
-    // this.navCtrl.push(FiltersPage);
+    this.navCtrl.push(FiltersPage);
   }
 
 }

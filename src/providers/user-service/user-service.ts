@@ -20,27 +20,16 @@ export class UserService {
 
   public tryAutoLogin(): Observable<boolean> {
     return this.authentication.user.first().map((authenticationUser) => {
-      if (!authenticationUser) {
-        return false;
-      }
-
-      this.setupUserObservable();
-      return true;
+      return !authenticationUser;
     });
   }
 
   public login(email: string, password: string) {
-    this.requireLoggedOut();
-    return this.authentication.auth
-      .signInWithEmailAndPassword(email, password)
-      .then(() => this.setupUserObservable());
+    return this.authentication.auth.signInWithEmailAndPassword(email, password);
   }
 
   public signup(email: string, password: string) {
-    this.requireLoggedOut();
-    return this.authentication.auth
-      .createUserWithEmailAndPassword(email, password)
-      .then(() => this.setupUserObservable());
+    return this.authentication.auth.createUserWithEmailAndPassword(email, password);
   }
 
   public logOut() {
@@ -54,7 +43,15 @@ export class UserService {
   }
 
   public get user() {
-    return this._user;
+    const userObject = this.database.object(this.databasePath).valueChanges();
+
+    return userObject.pipe(map(
+      (user) => assign(this.newBlankUser(), user || {})
+    ));
+  }
+
+  public get databasePath() {
+    return `users/${this.uid}`;
   }
 
   public get uid() {
@@ -67,17 +64,14 @@ export class UserService {
     }
   }
 
-  private setupUserObservable() {
-    const userObject = this.database.object('users/' + this.uid).valueChanges();
-
-    this._user = userObject.pipe(map(
-      (user) => assign(this.newBlankUser(), user || {})
-    ));
-  }
-
   private newBlankUser(): User {
     return {
       tasks: [],
+      settings: {
+        filters: {
+          showCompletedTasks: false,
+        },
+      },
     };
   }
 

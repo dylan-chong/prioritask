@@ -19,6 +19,8 @@ import { TasksService } from '../providers/tasks-service/tasks-service';
 import { WelcomePage } from '../pages/welcome/welcome';
 import { firebaseConfig } from '../config';
 import { SettingsPage } from '../pages/settings/settings';
+import { FiltersPage } from '../pages/filters/filters';
+import { SettingsService } from '../providers/settings-service/settings-service';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,7 @@ import { SettingsPage } from '../pages/settings/settings';
     EditTaskPage,
     WelcomePage,
     SettingsPage,
+    FiltersPage,
   ],
   imports: [
     BrowserModule,
@@ -47,6 +50,7 @@ import { SettingsPage } from '../pages/settings/settings';
     EditTaskPage,
     WelcomePage,
     SettingsPage,
+    FiltersPage,
   ],
   providers: [
     StatusBar,
@@ -54,6 +58,7 @@ import { SettingsPage } from '../pages/settings/settings';
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     UserService,
     TasksService,
+    SettingsService,
   ]
 })
 export class AppModule { }
