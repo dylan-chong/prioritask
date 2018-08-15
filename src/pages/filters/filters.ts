@@ -15,8 +15,8 @@ export class FiltersPage {
     });
   }
 
-  public saveFilterChange(changes: any) {
-    this.settingsService.updateSettings({ filters: changes })
+  public saveFilterChange() {
+    this.settingsService.updateSettings({ filters: this.filters })
   }
 }
 

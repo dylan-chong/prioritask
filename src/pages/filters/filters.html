@@ -14,9 +14,7 @@
       <ion-label>Show completed tasks</ion-label>
       <ion-toggle 
         [(ngModel)]="filters.showCompletedTasks"
-        (ionChange)="saveFilterChange({
-          showCompletedTasks: filters.showCompletedTasks 
-        })">
+        (ionChange)="saveFilterChange()">
       </ion-toggle>
     </ion-item>
 
@@ -24,9 +22,7 @@
       <ion-label>Show incomplete tasks</ion-label>
       <ion-toggle 
         [(ngModel)]="filters.showIncompleteTasks"
-        (ionChange)="saveFilterChange({
-          showIncompleteTasks: filters.showIncompleteTasks 
-        })">
+        (ionChange)="saveFilterChange()">
       </ion-toggle>
     </ion-item>
 
