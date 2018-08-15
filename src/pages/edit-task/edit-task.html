@@ -63,6 +63,22 @@
   </ion-list>
 
   <ion-list>
+    <ion-list-header>Priority</ion-list-header>
+
+    <ion-item>
+      <ion-range 
+        min="-1" 
+        max="1" 
+        step="1" 
+        snaps
+        [(ngModel)]="strategy.task.priority">
+        <ion-icon range-left name="arrow-round-down"></ion-icon>
+        <ion-icon range-right name="arrow-round-up"></ion-icon>
+      </ion-range>
+    </ion-item>
+  </ion-list>
+
+  <ion-list>
     <ion-list-header>Notes</ion-list-header>
 
     <ion-item>
@@ -73,8 +89,6 @@
       </ion-textarea>
     </ion-item>
   </ion-list>
-
-  <!-- TODO subtasks checklist -->
 
   <button
     ion-button

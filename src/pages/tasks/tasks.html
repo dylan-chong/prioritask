@@ -48,13 +48,22 @@
         (ionChange)="changeTaskCompletion(taskPair.key, taskPair.value.completed)"
         class="no-cover-item">
       </ion-checkbox>
-      <ion-label
-        [ngClass]="{
-          'completed-task': taskPair.value.completed,
-          'overdue-task': isOverdue(taskPair.value) && !taskPair.value.completed
-        }"
-        (click)="openTask(taskPair.key, taskPair.value)">
-        {{ taskPair.value.title }}
+
+      <ion-label (click)="openTask(taskPair.key, taskPair.value)">
+        <ion-icon 
+          [name]="taskPair.value.priority < 0 ? 'arrow-round-down' : 'arrow-round-up'"
+          [style.opacity]="taskPair.value.priority === 0 ? 0 : 1"
+          small 
+          style="padding-right: 10px;">
+        </ion-icon>
+
+        <span
+          [ngClass]="{
+            'completed-task': taskPair.value.completed,
+            'overdue-task': isOverdue(taskPair.value) && !taskPair.value.completed
+          }">
+          {{ taskPair.value.title }}
+        </span>
       </ion-label>
 
     </ion-item>
