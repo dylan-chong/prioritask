@@ -6,6 +6,6 @@ import { toPairs, map } from 'lodash';
 })
 export class KeyValuePipe implements PipeTransform {
   transform(value: object) {
-		return map(toPairs(value), ([key, value]) => ({key, value}));
+    return map(toPairs(value), ([key, value]) => ({key, value}));
   }
 }

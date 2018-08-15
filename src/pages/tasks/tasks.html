@@ -30,7 +30,7 @@
     </p>
   </div>
 
-  <ion-list *ngFor="let group of tasks | async | keyValue | groupTasks">
+  <ion-list *ngFor="let group of tasks | async | keyValue | groupTasks:filters">
     <ion-list-header>{{ group.title }}</ion-list-header>
 
     <ion-item *ngFor="let taskPair of group.tasks">

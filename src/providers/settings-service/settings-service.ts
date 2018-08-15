@@ -20,7 +20,6 @@ export class SettingsService {
   }
 
   public updateSettings(partialSettings: any) {
-    console.log(JSON.stringify(partialSettings))
     return Observable.fromPromise(
       this.database
         .object(this.databasePath)
@@ -33,3 +32,15 @@ export class SettingsService {
   }
 
 }
+
+export const convertFilterSettings = (filterSettings: any) => {
+  const filters = [];
+
+  if (!filterSettings.showCompletedTasks) {
+    filters.push(taskPairs => {
+      return taskPairs.filter(({ value: task }) => !task.completed)
+    });
+  }
+
+  return filters;
+};

@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { TasksService, isOverdue } from '../../providers/tasks-service/tasks-service';
 import { SettingsPage } from '../settings/settings';
 import { FiltersPage } from '../filters/filters';
+import { SettingsService, convertFilterSettings } from '../../providers/settings-service/settings-service';
 
 @Component({
   selector: 'page-tasks',
@@ -14,14 +15,20 @@ import { FiltersPage } from '../filters/filters';
 export class TasksPage {
   public tasks: Observable<Task[]>;
   public isOverdue = isOverdue;
+  public filters: any[];
 
   constructor(
     public navCtrl: NavController,
     private modalController: ModalController,
     private actionSheetController: ActionSheetController,
     private tasksService: TasksService,
+    private settingsService: SettingsService,
   ) {
     this.tasks = tasksService.tasks;
+
+    settingsService.settings.subscribe(({ filters }) => {
+      this.filters = convertFilterSettings(filters);
+    });
   }
 
   public addTask() {

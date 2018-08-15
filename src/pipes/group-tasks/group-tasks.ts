@@ -18,7 +18,11 @@ interface TaskGroup {
 })
 export class GroupTasksPipe implements PipeTransform {
 
-  transform(tasks: TaskPair[]): TaskGroup[] {
+  transform(tasks: TaskPair[], taskFilters: any[] = []): TaskGroup[] {
+    taskFilters.forEach(filter => 
+      tasks = filter(tasks)
+    );
+
     if (tasks.length === 0) {
       return [];
     }
