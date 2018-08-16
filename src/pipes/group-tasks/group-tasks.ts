@@ -45,9 +45,15 @@ const groupers: ((tasks: TaskPair[]) => TaskGroup)[] = [
     ),
   }),
   (taskPairs) => ({
+    title: 'Due the Day After Tomorrow',
+    tasks: taskPairs.filter(({ value: task }) => 
+      moment().add(2, 'days').isSame(task.dueDate, 'day')
+    ),
+  }),
+  (taskPairs) => ({
     title: 'Due Some Other Time',
     tasks: taskPairs.filter(({ value: task }) => 
-      moment().add(1, 'days').isBefore(task.dueDate, 'day')
+      moment().add(2, 'days').isBefore(task.dueDate, 'day')
     ),
   }),
 ];
