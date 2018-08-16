@@ -8,7 +8,7 @@ import { FiltersPage } from '../filters/filters';
 import { SettingsService, convertFilterSettings, TaskGroup, TaskPair } from '../../providers/settings-service/settings-service';
 import { KeyValuePipe } from '../../pipes/key-value/key-value';
 import { GroupTasksPipe, } from '../../pipes/group-tasks/group-tasks';
-import { map, startWith } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { combineLatest } from 'rxjs/observable/combineLatest';
 
 @Component({
@@ -16,6 +16,7 @@ import { combineLatest } from 'rxjs/observable/combineLatest';
   templateUrl: 'tasks.html',
 })
 export class TasksPage {
+  public hasLoadedTasks = false;
   public taskGroups: TaskGroup[] = [];
   public unfilteredTaskPairs: TaskPair[] = [];
   public isOverdue = isOverdue;
@@ -59,7 +60,7 @@ export class TasksPage {
       closeButtonText: 'Undo',
       dismissOnPageChange: true,
     });
-    toast.onDidDismiss((data, role) => {    
+    toast.onDidDismiss((data, role) => {
       if (role !== 'close') {
         return;
       }
@@ -97,18 +98,17 @@ export class TasksPage {
         this.unfilteredTaskPairs = new KeyValuePipe().transform(tasksObject);
         return this.unfilteredTaskPairs;
       }),
-      startWith([]),
     );
 
     const filtersObservable = this.settingsService.settings.pipe(
       map(({ filters }) => {
         return convertFilterSettings(filters);
       }),
-      startWith([]),
     );
 
     combineLatest(taskPairsObservable, filtersObservable)
       .subscribe(([taskPairs, filters]) => {
+        this.hasLoadedTasks = true;
         this.taskGroups = new GroupTasksPipe().transform(taskPairs, filters);
       });
   }

@@ -20,53 +20,62 @@
 
 
 <ion-content padding>
+  <ng-container
+    *ngIf="hasLoadedTasks; then tasksLoadedContent; else loadingContent">
+  </ng-container>
 
-  <div *ngIf="unfilteredTaskPairs.length === 0" style="text-align: center">
-    <p>
-      You have no tasks yet.
-    </p>
-    <p>
-      Go ahead and create one above!
-    </p>
-  </div>
+  <ng-template #loadingContent>
+    <ion-spinner class="centred-spinner"></ion-spinner>
+  </ng-template>
 
-  <div 
-    *ngIf="unfilteredTaskPairs.length > 0 && taskGroups.length === 0" 
-    style="text-align: center">
-    <p>
-      You have no tasks matching your filters.
-    </p>
-  </div>
+  <ng-template #tasksLoadedContent>
+    <div *ngIf="unfilteredTaskPairs.length === 0" style="text-align: center">
+      <p>
+        You have no tasks yet.
+      </p>
+      <p>
+        Go ahead and create one above!
+      </p>
+    </div>
 
-  <ion-list *ngFor="let group of taskGroups">
-    <ion-list-header>{{ group.title }}</ion-list-header>
+    <div
+      *ngIf="unfilteredTaskPairs.length > 0 && taskGroups.length === 0"
+      style="text-align: center">
+      <p>
+        You have no tasks matching your filters.
+      </p>
+    </div>
 
-    <ion-item *ngFor="let taskPair of group.tasks">
+    <ion-list *ngFor="let group of taskGroups">
+      <ion-list-header>{{ group.title }}</ion-list-header>
 
-      <ion-checkbox
-        [(ngModel)]="taskPair.value.completed"
-        (ionChange)="changeTaskCompletion(taskPair.key, taskPair.value.completed)"
-        class="no-cover-item">
-      </ion-checkbox>
+      <ion-item *ngFor="let taskPair of group.tasks">
 
-      <ion-label (click)="openTask(taskPair.key, taskPair.value)">
-        <ion-icon 
-          [name]="taskPair.value.priority < 0 ? 'arrow-round-down' : 'arrow-round-up'"
-          [style.opacity]="taskPair.value.priority === 0 ? 0 : 1"
-          small 
-          style="padding-right: 10px;">
-        </ion-icon>
+        <ion-checkbox
+          [(ngModel)]="taskPair.value.completed"
+          (ionChange)="changeTaskCompletion(taskPair.key, taskPair.value.completed)"
+          class="no-cover-item">
+        </ion-checkbox>
 
-        <span
-          [ngClass]="{
+        <ion-label (click)="openTask(taskPair.key, taskPair.value)">
+          <ion-icon
+            [name]="taskPair.value.priority < 0 ? 'arrow-round-down' : 'arrow-round-up'"
+            [style.opacity]="taskPair.value.priority === 0 ? 0 : 1"
+            small
+            style="padding-right: 10px;">
+          </ion-icon>
+
+          <span
+            [ngClass]="{
             'completed-task': taskPair.value.completed,
             'overdue-task': isOverdue(taskPair.value) && !taskPair.value.completed
-          }">
-          {{ taskPair.value.title }}
-        </span>
-      </ion-label>
+            }">
+            {{ taskPair.value.title }}
+          </span>
+        </ion-label>
 
-    </ion-item>
-  </ion-list>
+      </ion-item>
+    </ion-list>
+  </ng-template>
 
 </ion-content>
