@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController, ActionSheetController } from 'ionic-angular';
+import { NavController, ModalController, ActionSheetController, ToastController } from 'ionic-angular';
 import { Task } from '../../providers/user-service/user-service';
 import { EditTaskPage, EditTaskStrategy, AddTaskStrategy } from '../edit-task/edit-task';
 import { TasksService, isOverdue } from '../../providers/tasks-service/tasks-service';
@@ -24,6 +24,7 @@ export class TasksPage {
     public navCtrl: NavController,
     private modalController: ModalController,
     private actionSheetController: ActionSheetController,
+    private toastController: ToastController,
     private tasksService: TasksService,
     private settingsService: SettingsService,
   ) {
@@ -42,7 +43,31 @@ export class TasksPage {
   }
 
   public changeTaskCompletion(taskKey: string, isCompleted: boolean) {
-    this.tasksService.updateTask(taskKey, { completed: isCompleted });
+    const setCompleted = (completed: boolean) =>
+      this.tasksService.updateTask(taskKey, { completed });
+
+    setCompleted(isCompleted);
+
+    if (!isCompleted) {
+      return;
+    }
+
+    const toast = this.toastController.create({
+      message: 'Task completed!',
+      duration: 3000,
+      showCloseButton: true,
+      closeButtonText: 'Undo',
+      dismissOnPageChange: true,
+    });
+    toast.onDidDismiss((data, role) => {    
+      if (role !== 'close') {
+        return;
+      }
+
+      setCompleted(false);
+    });
+
+    toast.present();
   }
 
   public openSettingsPopup() {
