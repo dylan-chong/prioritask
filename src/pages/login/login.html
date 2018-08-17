@@ -8,36 +8,41 @@
 
 <ion-content padding>
 
-  <form (ngSubmit)="login()">
-    <ion-input
-      placeholder="Email"
-      name="email"
-      type="email"
-      [(ngModel)]="email">
-    </ion-input>
-    <!-- TODO SOMETIME enter key should go to next field -->
+  <ion-list inset>
+    <form (ngSubmit)="login()">
+      <ion-item>
+        <ion-input
+          placeholder="Email"
+          name="email"
+          type="email"
+          [(ngModel)]="email">
+        </ion-input>
+      </ion-item>
+      <!-- TODO SOMETIME enter key should go to next field -->
 
-    <ion-input
-      placeholder="Password"
-      name="password"
-      type="password"
-      [(ngModel)]="password"
-      (keyup.enter)="login()">
-    </ion-input>
+      <ng-input-password
+        placeholder="Password"
+        name="password"
+        type="password"
+        [(ngModel)]="password"
+        (keyup.enter)="login()">
+      </ng-input-password>
 
-    <button
-      ion-button
-      block
-      type="submit"
-      [disabled]="!canLogin()">
-      Log In
+      <button
+        ion-button
+        block
+        style="margin: 15px auto"
+        type="submit"
+        [disabled]="!canLogin()">
+        Log In
+      </button>
+    </form>
+
+    <hr>
+
+    <button ion-button block outline (click)="goToSignup()">
+      Sign Up
     </button>
-  </form>
-
-  <hr>
-
-  <button ion-button block outline (click)="goToSignup()">
-    Sign Up
-  </button>
+  </ion-list>
 
 </ion-content>

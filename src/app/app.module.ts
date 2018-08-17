@@ -20,6 +20,7 @@ import { SettingsPage } from '../pages/settings/settings';
 import { FiltersPage } from '../pages/filters/filters';
 import { SettingsService } from '../providers/settings-service/settings-service';
 import { CalendarModule } from "ion2-calendar";
+import { NgInputPasswordComponent } from 'ng-input-password/ng-input-password';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { CalendarModule } from "ion2-calendar";
     WelcomePage,
     SettingsPage,
     FiltersPage,
+    NgInputPasswordComponent,
   ],
   imports: [
     BrowserModule,

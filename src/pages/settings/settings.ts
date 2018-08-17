@@ -32,7 +32,7 @@ export class SettingsPage {
     this.userService.logOut().then(() => {
       this.navController.setRoot(LoginPage, {}, {
         animate: true,
-        direction: 'backwards',
+        direction: 'back',
       });
     });
   }

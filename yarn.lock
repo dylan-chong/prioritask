@@ -68,7 +68,7 @@
   dependencies:
     tslib "^1.7.1"
 
-"@firebase/app-types@0.3.2":
+"@firebase/app-types@0.3.2", "@firebase/app-types@^0.3.2":
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/@firebase/app-types/-/app-types-0.3.2.tgz#a92dc544290e2893bd8c02a81e684dae3d8e7c85"
 
@@ -3698,6 +3698,10 @@ netmask@^1.0.6:
 next-tick@1:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
+
+ng-input-password@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/ng-input-password/-/ng-input-password-3.0.0.tgz#f43bad25290c43f2d549efe9c48dbdf457e30aa8"
 
 node-fetch@^1.0.1:
   version "1.7.3"
