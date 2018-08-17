@@ -31,7 +31,7 @@
       <button
         ion-button
         block
-        style="margin: 15px auto"
+        class="button-full-vertically-spaced"
         type="submit"
         [disabled]="!canLogin()">
         Log In
@@ -40,7 +40,12 @@
 
     <hr>
 
-    <button ion-button block outline (click)="goToSignup()">
+    <button
+      ion-button
+      block
+      outline
+      class="button-full-vertically-spaced"
+      (click)="goToSignup()">
       Sign Up
     </button>
   </ion-list>
