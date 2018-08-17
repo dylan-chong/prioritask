@@ -88,6 +88,7 @@ export class EditTaskPage {
     const options: CalendarModalOptions = {
       title: 'Select Due Date',
       defaultDate: moment(this.strategy.task.dueDate).toDate(),
+      canBackwardsSelected: true,
     };
     const myCalendar = this.modalController.create(CalendarModal, { options });
 
