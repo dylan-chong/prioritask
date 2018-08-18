@@ -111,7 +111,7 @@ export class EditTaskPage {
   }
 
   public dateIgnoringTime() {
-    return moment(this.strategy.task.dueDate).format('dddd, MMMM Do YYYY');
+    return moment(this.strategy.task.dueDate).format('dddd, MMM Do YYYY');
   }
 
   // Hack around ionic date time component ignoring time zone of ISO8601 format string
