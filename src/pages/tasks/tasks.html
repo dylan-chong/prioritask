@@ -7,7 +7,7 @@
       </button>
     </ion-buttons>
 
-    <ion-title>Tasks</ion-title>
+    <ion-title>Your Tasks</ion-title>
 
     <ion-buttons end>
       <button ion-button icon-only (click)="addTask()">
@@ -37,6 +37,15 @@
         Go ahead and create one above!
       </p>
     </div>
+
+    <ion-calendar 
+      *ngIf="hasCalendar && unfilteredTaskPairs.length > 0"
+      [(ngModel)]="calendarDate"
+      (onChange)="updateCalendarFilter()"
+      [options]="{ canBackwardsSelected: true, defaultDate: calendarDate }"
+      type="moment"
+      [format]="'YYYY-MM-DD'">
+    </ion-calendar>
 
     <div
       *ngIf="unfilteredTaskPairs.length > 0 && taskGroups.length === 0"

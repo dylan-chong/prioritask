@@ -13,4 +13,8 @@ export class HomeTabsPage {
 
   constructor(public navCtrl: NavController) {}
 
+  public get daysParams() {
+    return { hasCalendar: true };
+  }
+
 }

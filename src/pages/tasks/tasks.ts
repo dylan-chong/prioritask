@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController, ActionSheetController, ToastController } from 'ionic-angular';
+import { NavController, ModalController, ActionSheetController, ToastController, NavParams } from 'ionic-angular';
 import { Task } from '../../providers/user-service/user-service';
 import { EditTaskPage, EditTaskStrategy, AddTaskStrategy } from '../edit-task/edit-task';
 import { TasksService, isOverdue } from '../../providers/tasks-service/tasks-service';
@@ -8,14 +8,21 @@ import { FiltersPage } from '../filters/filters';
 import { SettingsService, convertFilterSettings, TaskGroup, TaskPair } from '../../providers/settings-service/settings-service';
 import { KeyValuePipe } from '../../pipes/key-value/key-value';
 import { GroupTasksPipe, } from '../../pipes/group-tasks/group-tasks';
-import { map } from 'rxjs/operators';
+import { map, startWith } from 'rxjs/operators';
 import { combineLatest } from 'rxjs/observable/combineLatest';
+import { Moment } from 'moment';
+import * as moment from 'moment';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'page-tasks',
   templateUrl: 'tasks.html',
 })
 export class TasksPage {
+  public hasCalendar: any;
+  public calendarDate: Moment = moment();
+  private calendarFilterObservable: Subject<any>;
+
   public hasLoadedTasks = false;
   public taskGroups: TaskGroup[] = [];
   public unfilteredTaskPairs: TaskPair[] = [];
@@ -23,6 +30,7 @@ export class TasksPage {
 
   constructor(
     public navCtrl: NavController,
+    private navParams: NavParams,
     private modalController: ModalController,
     private actionSheetController: ActionSheetController,
     private toastController: ToastController,
@@ -30,6 +38,11 @@ export class TasksPage {
     private settingsService: SettingsService,
   ) {
     this.initialiseTaskList();
+
+    this.hasCalendar = this.navParams.get('hasCalendar');
+    if (this.hasCalendar) {
+      this.updateCalendarFilter();
+    }
   }
 
   public addTask() {
@@ -80,6 +93,20 @@ export class TasksPage {
     actionSheet.present();
   }
 
+  public updateCalendarFilter() {
+    if (!this.hasCalendar) {
+      return;
+    }
+
+    const filters = [taskPairs => {
+      return taskPairs.filter(pair => 
+        moment(pair.value.dueDate).isSame(this.calendarDate, 'day')
+      );
+    }];
+
+    this.calendarFilterObservable.next(filters);
+  }
+
   private goToSettings() {
     this.navCtrl.push(SettingsPage);
   }
@@ -97,15 +124,21 @@ export class TasksPage {
     );
 
     const filtersObservable = this.settingsService.settings.pipe(
-      map(({ filters }) => {
-        return convertFilterSettings(filters);
-      }),
+      map(({ filters }) => convertFilterSettings(filters)),
     );
 
-    combineLatest(taskPairsObservable, filtersObservable)
-      .subscribe(([taskPairs, filters]) => {
-        this.hasLoadedTasks = true;
-        this.taskGroups = new GroupTasksPipe().transform(taskPairs, filters);
-      });
+    this.calendarFilterObservable = new Subject();
+
+    combineLatest(
+      taskPairsObservable,
+      filtersObservable,
+      this.calendarFilterObservable.pipe(startWith([])),
+    ).subscribe(([taskPairs, filters, calendarFilters]) => {
+      this.hasLoadedTasks = true;
+      this.taskGroups = new GroupTasksPipe().transform(
+        taskPairs,
+        [...filters, ...calendarFilters],
+      );
+    });
   }
 }
