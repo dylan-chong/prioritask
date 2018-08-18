@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, LoadingController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { UserService } from '../../providers/user-service/user-service';
-import { TasksPage } from '../tasks/tasks';
+import { HomeTabsPage } from '../home-tabs/home-tabs';
 
 @Component({
   selector: 'page-welcome',
@@ -28,7 +28,7 @@ export class WelcomePage {
         return;
       }
 
-      this.navCtrl.setRoot(TasksPage, {}, {
+      this.navCtrl.setRoot(HomeTabsPage, {}, {
         animate: true,
         direction: 'forward',
       });

@@ -21,6 +21,7 @@ import { FiltersPage } from '../pages/filters/filters';
 import { SettingsService } from '../providers/settings-service/settings-service';
 import { CalendarModule } from "ion2-calendar";
 import { NgInputPasswordComponent } from 'ng-input-password/ng-input-password';
+import { HomeTabsPage } from '../pages/home-tabs/home-tabs';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { NgInputPasswordComponent } from 'ng-input-password/ng-input-password';
     WelcomePage,
     SettingsPage,
     FiltersPage,
+    HomeTabsPage,
     NgInputPasswordComponent,
   ],
   imports: [
@@ -53,6 +55,7 @@ import { NgInputPasswordComponent } from 'ng-input-password/ng-input-password';
     WelcomePage,
     SettingsPage,
     FiltersPage,
+    HomeTabsPage,
   ],
   providers: [
     StatusBar,

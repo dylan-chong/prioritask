@@ -1,14 +1,11 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController, NavParams, LoadingController } from 'ionic-angular';
 import { UserService } from '../../providers/user-service/user-service';
-import { TasksPage } from '../tasks/tasks';
+import { HomeTabsPage } from '../home-tabs/home-tabs';
 
 @Component({
   selector: 'page-sign-up',
   templateUrl: 'sign-up.html',
-  entryComponents: [
-    TasksPage,
-  ],
 })
 export class SignUpPage {
 
@@ -36,7 +33,7 @@ export class SignUpPage {
 
     this.userService.signup(this.email, this.password)
       .then(() => {
-        this.navCtrl.setRoot(TasksPage, {}, {
+        this.navCtrl.setRoot(HomeTabsPage, {}, {
           animate: true,
           direction: 'forward',
         });
