@@ -9,6 +9,7 @@ import { HomeTabsPage } from '../home-tabs/home-tabs';
   templateUrl: 'welcome.html',
 })
 export class WelcomePage {
+  public hasLoaded = false;
 
   constructor(
     public navCtrl: NavController,
@@ -25,13 +26,14 @@ export class WelcomePage {
       loading.dismiss();
 
       if (!isLoggedIn) {
+        this.hasLoaded = true;
         return;
       }
 
       this.navCtrl.setRoot(HomeTabsPage, {}, {
         animate: true,
         direction: 'forward',
-      });
+      }).then(() => this.hasLoaded = true);
     });
   }
 
