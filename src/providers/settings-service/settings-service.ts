@@ -49,7 +49,7 @@ export const convertFilterSettings = (filterSettings: any) => {
   const filters: ((pairs: TaskPair[]) => TaskPair[])[] = [];
 
   filters.push(taskPairs => {
-    return sortBy(taskPairs, (pair) => -moment(pair.value.dueDate).unix());
+    return sortBy(taskPairs, (pair) => moment(pair.value.dueDate).unix());
   });
 
   if (!filterSettings.showCompletedTasks) {
@@ -66,6 +66,3 @@ export const convertFilterSettings = (filterSettings: any) => {
 
   return filters;
 };
-
-// TODO add subtasks 
-

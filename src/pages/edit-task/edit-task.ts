@@ -215,6 +215,6 @@ export class EditTaskStrategy extends PageStrategy {
   public deleteTask(): Observable<any> {
     return this.tasksService.deleteTask(this.taskKey).map(() => {
       this.hasDeleted = true;
-    })
+    });
   }
 }
