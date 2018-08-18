@@ -43,18 +43,14 @@ export class TasksPage {
     this.navCtrl.push(EditTaskPage, { strategy });
   }
 
-  public changeTaskCompletion(taskKey: string, isCompleted: boolean) {
+  public changeTaskCompletion(taskKey: string, shouldMarkCompleted: boolean) {
     const setCompleted = (completed: boolean) =>
       this.tasksService.updateTask(taskKey, { completed });
 
-    setCompleted(isCompleted);
-
-    if (!isCompleted) {
-      return;
-    }
+    setCompleted(shouldMarkCompleted);
 
     const toast = this.toastController.create({
-      message: 'Task completed!',
+      message: shouldMarkCompleted ? 'Task completed!' : 'Task marked incomplete',
       duration: 3000,
       showCloseButton: true,
       closeButtonText: 'Undo',
@@ -65,7 +61,7 @@ export class TasksPage {
         return;
       }
 
-      setCompleted(false);
+      setCompleted(!shouldMarkCompleted);
     });
 
     toast.present();
